@@ -98,12 +98,12 @@
         <!--Home Page-->
         <scene sceneID="zUL-Ei-1sC">
             <objects>
-                <viewController id="CKu-65-Fvd" userLabel="Home Page" sceneMemberID="viewController">
+                <viewController id="CKu-65-Fvd" userLabel="Home Page" customClass="HomePageViewController" customModule="Kickback" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="17U-SA-biC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="70r-Qm-BJG">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="88" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="70r-Qm-BJG">
                                 <rect key="frame" x="0.0" y="88" width="375" height="724"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
@@ -121,8 +121,14 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="edit" id="n6v-Ia-ZOa"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="5I8-qD-gb3">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="addStation:" destination="CKu-65-Fvd" id="1a5-GD-wMt"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="stationTableView" destination="70r-Qm-BJG" id="UW5-JY-YOc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ytw-tb-OtR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

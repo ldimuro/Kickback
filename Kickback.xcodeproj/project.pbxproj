@@ -15,6 +15,9 @@
 		844C9DE620FC576F0029269D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844C9DE420FC576F0029269D /* LaunchScreen.storyboard */; };
 		844C9DEE20FC5ECD0029269D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 844C9DED20FC5ECD0029269D /* GoogleService-Info.plist */; };
 		844C9DF020FC613E0029269D /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844C9DEF20FC613E0029269D /* HomePageViewController.swift */; };
+		84EA632D20FDCC6100F84701 /* StationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA632B20FDCC6100F84701 /* StationTableViewCell.swift */; };
+		84EA632E20FDCC6100F84701 /* StationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EA632C20FDCC6100F84701 /* StationTableViewCell.xib */; };
+		84EA633020FDD60C00F84701 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA632F20FDD60C00F84701 /* Station.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +32,9 @@
 		844C9DE720FC576F0029269D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		844C9DED20FC5ECD0029269D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		844C9DEF20FC613E0029269D /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
+		84EA632B20FDCC6100F84701 /* StationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationTableViewCell.swift; sourceTree = "<group>"; };
+		84EA632C20FDCC6100F84701 /* StationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StationTableViewCell.xib; sourceTree = "<group>"; };
+		84EA632F20FDD60C00F84701 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		A9FDBA24BC6CAD2AC2A446F0 /* Pods-Kickback.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kickback.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Kickback/Pods-Kickback.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,6 +74,9 @@
 				844C9DDB20FC576D0029269D /* AppDelegate.swift */,
 				844C9DDD20FC576D0029269D /* LoginViewController.swift */,
 				844C9DEF20FC613E0029269D /* HomePageViewController.swift */,
+				84EA632B20FDCC6100F84701 /* StationTableViewCell.swift */,
+				84EA632F20FDD60C00F84701 /* Station.swift */,
+				84EA632C20FDCC6100F84701 /* StationTableViewCell.xib */,
 				844C9DDF20FC576D0029269D /* Main.storyboard */,
 				844C9DE220FC576F0029269D /* Assets.xcassets */,
 				844C9DE420FC576F0029269D /* LaunchScreen.storyboard */,
@@ -156,6 +165,7 @@
 			files = (
 				844C9DE620FC576F0029269D /* LaunchScreen.storyboard in Resources */,
 				844C9DEE20FC5ECD0029269D /* GoogleService-Info.plist in Resources */,
+				84EA632E20FDCC6100F84701 /* StationTableViewCell.xib in Resources */,
 				844C9DE320FC576F0029269D /* Assets.xcassets in Resources */,
 				844C9DE120FC576D0029269D /* Main.storyboard in Resources */,
 			);
@@ -224,7 +234,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				844C9DDE20FC576D0029269D /* LoginViewController.swift in Sources */,
+				84EA633020FDD60C00F84701 /* Station.swift in Sources */,
 				844C9DDC20FC576D0029269D /* AppDelegate.swift in Sources */,
+				84EA632D20FDCC6100F84701 /* StationTableViewCell.swift in Sources */,
 				844C9DF020FC613E0029269D /* HomePageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
