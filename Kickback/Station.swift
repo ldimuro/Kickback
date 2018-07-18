@@ -9,6 +9,8 @@
 import Foundation
 
 class Station {
-    var station : String = ""
+    var stationName : String = ""
     var user : String = ""
+    var songs = [String]()
+    var followers = [String]()
 }
