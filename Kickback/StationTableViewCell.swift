@@ -6,10 +6,18 @@
 //  Copyright © 2018 Lou DiMuro. All rights reserved.
 //
 
+//  Profile Icon made by Smashicon [https://www.flaticon.com/authors/smashicons] from www.flaticon.com
+//  Music-note Icon made by Smashicon [https://www.flaticon.com/authors/smashicons] from www.flaticon.com
+
 import UIKit
 
 class StationTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var stationName: UILabel!
+    @IBOutlet weak var songCount: UILabel!
+    @IBOutlet weak var userCount: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -13,14 +13,13 @@ class HomePageViewController: UIViewController, UITableViewDelegate , UITableVie
 
     @IBOutlet weak var stationTableView: UITableView!
     
-    var array = ["1", "2", "3"]
     var stationArray = [Station]()
     let user = Auth.auth().currentUser
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadTasks()
+        loadStations()
 
         stationTableView.delegate = self
         stationTableView.dataSource = self
@@ -39,7 +38,17 @@ class HomePageViewController: UIViewController, UITableViewDelegate , UITableVie
         let cell = tableView.dequeueReusableCell(withIdentifier: "stationCell")! as! StationTableViewCell
         let station = stationArray[indexPath.row]
         
-        cell.textLabel?.text = station.station
+        if station.followers.contains("None") {
+            station.followers.removeAll()
+        }
+
+        if station.songs.contains("None") {
+            station.songs.removeAll()
+        }
+        
+        cell.stationName.text = station.stationName
+        cell.songCount.text = "\(station.songs.count)"
+        cell.userCount.text = "\(station.followers.count)"
         
         return cell
     }
@@ -70,7 +79,6 @@ class HomePageViewController: UIViewController, UITableViewDelegate , UITableVie
         alert.addAction(stop)
         
         present(alert, animated: true, completion: nil)
-        
     }
     
     //Save tasks to phone using Codable
@@ -81,7 +89,9 @@ class HomePageViewController: UIViewController, UITableViewDelegate , UITableVie
         let email = user!.email
         
         let postDictionary = ["Station Name": station,
-                              "User": email]
+                              "User": email!,
+                              "Songs": ["None"],
+                              "Followers": ["None"]] as [String : Any]
         
         addStation.childByAutoId().setValue(postDictionary) {
             (error, reference) in
@@ -96,7 +106,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate , UITableVie
     }
     
     //Load tasks from phone using Codable
-    func loadTasks() {
+    func loadStations() {
         
         let stationDB = Database.database().reference().child("Stations")
         
@@ -104,14 +114,18 @@ class HomePageViewController: UIViewController, UITableViewDelegate , UITableVie
             
 //            let key = snapshot.key
             
-            let snapshotValue = snapshot.value as! Dictionary<String,String>
+            let snapshotValue = snapshot.value as! Dictionary<String,Any>
             
             let station = snapshotValue["Station Name"]!
             let user = snapshotValue["User"]!
+            let songs = snapshotValue["Songs"]!
+            let followers = snapshotValue["Followers"]!
             
             let dbStation = Station()
-            dbStation.station = station
-            dbStation.user = user
+            dbStation.stationName = station as! String
+            dbStation.user = user as! String
+            dbStation.songs = songs as! [String]
+            dbStation.followers = followers as! [String]
             
             self.stationArray.append(dbStation)
             
