@@ -40,6 +40,11 @@ class ViewController: UIViewController {
                 print("Login successful")
                 HUD.hide()
                 HUD.flash(.labeledSuccess(title: "Login Successful", subtitle: ""), delay: 0.2)
+                
+                //Saves login so user doesn't have to sign in every time the app is launched
+                UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
+                UserDefaults.standard.synchronize()
+                
                 self.performSegue(withIdentifier: "goToHome", sender: self)
             }
             //            HUD.hide()

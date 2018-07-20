@@ -1,14 +1,14 @@
 //
-//  AddStationViewController.swift
+//  HomePageNavigationViewController.swift
 //  Kickback
 //
-//  Created by Lou DiMuro on 7/18/18.
+//  Created by Lou DiMuro on 7/19/18.
 //  Copyright © 2018 Lou DiMuro. All rights reserved.
 //
 
 import UIKit
 
-class AddStationViewController: UIViewController {
+class HomePageNavigationViewController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,10 +16,9 @@ class AddStationViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-    @IBAction func createStationButton(_ sender: Any) {
-        
-        dismiss(animated: true, completion: nil)
-        
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
 

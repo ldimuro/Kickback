@@ -20,6 +20,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
+        //Checks whether or not the user is signed in
+        let userLoginStatus = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
+        
+        if(userLoginStatus)
+        {
+            print("USER IS LOGGED IN")
+            
+            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main" , bundle: nil)
+            
+            let homepage = mainStoryboard.instantiateViewController(withIdentifier: "mainTab") as! TabBarViewController
+            window!.rootViewController = homepage
+            window!.makeKeyAndVisible()
+            
+        } else {
+            print("USER IS NOT LOGGED IN")
+        }
+        
         return true
     }
 

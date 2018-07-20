@@ -19,15 +19,31 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     }
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        if (tabBarController.selectedIndex == 1) {
-            let vc = AddStationViewController()
-            present(vc, animated: true)
+        
+        // If your view controller is emedded in a UINavigationController you will need to check if it's a UINavigationController and check that the root view controller is your desired controller (or subclass the navigation controller)
+        if viewController is AddStationNavigationViewController {
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let controller = storyboard.instantiateViewController(withIdentifier: "stationNav") as? AddStationNavigationViewController {
+                controller.modalPresentationStyle = .fullScreen
+                self.present(controller, animated: true, completion: nil)
+            }
             
             return false
-        } else {
-            return true
         }
+        
+        // Tells the tab bar to select other view controller as normal
+        return true
     }
+    
+//    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+//        print("Selected item")
+//    }
+//
+//    // UITabBarControllerDelegate
+//    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+//        print("Selected view controller: \(viewController)")
+//    }
 
     /*
     // MARK: - Navigation
