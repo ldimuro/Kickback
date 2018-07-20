@@ -8,8 +8,9 @@
 
 import UIKit
 import Firebase
+import PKHUD
 
-class HomePageViewController: UIViewController, UITableViewDelegate , UITableViewDataSource {
+class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var stationTableView: UITableView!
     
@@ -27,6 +28,8 @@ class HomePageViewController: UIViewController, UITableViewDelegate , UITableVie
         // Do any additional setup after loading the view.
         stationTableView.register(UINib(nibName: "StationTableViewCell", bundle: nil), forCellReuseIdentifier: "stationCell")
     }
+    
+    
     
     //setup functions sideNave main TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -108,6 +111,8 @@ class HomePageViewController: UIViewController, UITableViewDelegate , UITableVie
     //Load tasks from phone using Codable
     func loadStations() {
         
+        HUD.show( .labeledProgress(title: "Loading Stations", subtitle: ""))
+        
         let stationDB = Database.database().reference().child("Stations")
         
         stationDB.observe(.childAdded) { (snapshot) in
@@ -130,6 +135,8 @@ class HomePageViewController: UIViewController, UITableViewDelegate , UITableVie
             self.stationArray.append(dbStation)
             
             self.stationTableView.reloadData()
+            
+            HUD.hide()
         }
     }
     

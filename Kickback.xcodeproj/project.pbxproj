@@ -17,6 +17,9 @@
 		844C9DF020FC613E0029269D /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844C9DEF20FC613E0029269D /* HomePageViewController.swift */; };
 		8455AB1721004956009BCBDB /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455AB1621004956009BCBDB /* TabBarViewController.swift */; };
 		8455AB1921004DF7009BCBDB /* AddStationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455AB1821004DF7009BCBDB /* AddStationViewController.swift */; };
+		849FBFF72101AA4000387044 /* HomePageNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FBFF62101AA4000387044 /* HomePageNavigationViewController.swift */; };
+		849FBFF92101AA9900387044 /* AddStationNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FBFF82101AA9900387044 /* AddStationNavigationViewController.swift */; };
+		849FBFFB2101B57200387044 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FBFFA2101B57200387044 /* SettingsViewController.swift */; };
 		84EA632D20FDCC6100F84701 /* StationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA632B20FDCC6100F84701 /* StationTableViewCell.swift */; };
 		84EA632E20FDCC6100F84701 /* StationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EA632C20FDCC6100F84701 /* StationTableViewCell.xib */; };
 		84EA633020FDD60C00F84701 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA632F20FDD60C00F84701 /* Station.swift */; };
@@ -36,6 +39,9 @@
 		844C9DEF20FC613E0029269D /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		8455AB1621004956009BCBDB /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		8455AB1821004DF7009BCBDB /* AddStationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStationViewController.swift; sourceTree = "<group>"; };
+		849FBFF62101AA4000387044 /* HomePageNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageNavigationViewController.swift; sourceTree = "<group>"; };
+		849FBFF82101AA9900387044 /* AddStationNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStationNavigationViewController.swift; sourceTree = "<group>"; };
+		849FBFFA2101B57200387044 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		84EA632B20FDCC6100F84701 /* StationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationTableViewCell.swift; sourceTree = "<group>"; };
 		84EA632C20FDCC6100F84701 /* StationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StationTableViewCell.xib; sourceTree = "<group>"; };
 		84EA632F20FDD60C00F84701 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
@@ -88,8 +94,10 @@
 		8455AB1A21005542009BCBDB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				849FBFF52101AA0D00387044 /* Navigation Controllers */,
 				844C9DDB20FC576D0029269D /* AppDelegate.swift */,
 				844C9DDD20FC576D0029269D /* LoginViewController.swift */,
+				849FBFFA2101B57200387044 /* SettingsViewController.swift */,
 				844C9DEF20FC613E0029269D /* HomePageViewController.swift */,
 				8455AB1621004956009BCBDB /* TabBarViewController.swift */,
 				8455AB1821004DF7009BCBDB /* AddStationViewController.swift */,
@@ -130,6 +138,15 @@
 				84EA632C20FDCC6100F84701 /* StationTableViewCell.xib */,
 			);
 			path = "Custom Cells";
+			sourceTree = "<group>";
+		};
+		849FBFF52101AA0D00387044 /* Navigation Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				849FBFF62101AA4000387044 /* HomePageNavigationViewController.swift */,
+				849FBFF82101AA9900387044 /* AddStationNavigationViewController.swift */,
+			);
+			path = "Navigation Controllers";
 			sourceTree = "<group>";
 		};
 		A612C54BB9BBAFCCFDE96C1C /* Frameworks */ = {
@@ -280,11 +297,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				844C9DDE20FC576D0029269D /* LoginViewController.swift in Sources */,
+				849FBFF92101AA9900387044 /* AddStationNavigationViewController.swift in Sources */,
 				8455AB1921004DF7009BCBDB /* AddStationViewController.swift in Sources */,
+				849FBFFB2101B57200387044 /* SettingsViewController.swift in Sources */,
 				84EA633020FDD60C00F84701 /* Station.swift in Sources */,
 				844C9DDC20FC576D0029269D /* AppDelegate.swift in Sources */,
 				84EA632D20FDCC6100F84701 /* StationTableViewCell.swift in Sources */,
 				8455AB1721004956009BCBDB /* TabBarViewController.swift in Sources */,
+				849FBFF72101AA4000387044 /* HomePageNavigationViewController.swift in Sources */,
 				844C9DF020FC613E0029269D /* HomePageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
