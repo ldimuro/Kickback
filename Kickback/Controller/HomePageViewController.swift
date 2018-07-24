@@ -13,6 +13,7 @@ import PKHUD
 class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var stationTableView: UITableView!
+    @IBOutlet weak var stationSwitcher: UISegmentedControl!
     
     var stationArray = [Station]()
     let user = Auth.auth().currentUser
@@ -20,6 +21,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        addNavBarImage()
         loadStations()
 
         stationTableView.delegate = self
@@ -84,7 +86,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         present(alert, animated: true, completion: nil)
     }
     
-    //Save tasks to phone using Codable
+    //Save tasks to Firebase
     func saveStation(station: String) {
         
         let addStation = Database.database().reference().child("Stations")
@@ -108,10 +110,11 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    //Load tasks from phone using Codable
+    //Load tasks from Firebase
     func loadStations() {
         
         HUD.show( .labeledProgress(title: "Loading Stations", subtitle: ""))
+        
         
         let stationDB = Database.database().reference().child("Stations")
         
@@ -137,7 +140,38 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             self.stationTableView.reloadData()
             
             HUD.hide()
+            
         }
+    }
+    
+    @IBAction func stationSwitch(_ sender: Any) {
+        switch stationSwitcher.selectedSegmentIndex {
+        case 0: //MY STATIONS
+            print("My Stations")
+        case 1: //SHARED WITH ME
+            print("Shared With Me")
+        default:
+            break
+        }
+    }
+    
+    func addNavBarImage() {
+        
+        let navController = navigationController!
+        
+        let image = #imageLiteral(resourceName: "kickback-logo")
+        let imageView = UIImageView(image: image)
+        
+        let bannerWidth = navController.navigationBar.frame.size.width
+        let bannerHeight = navController.navigationBar.frame.size.height
+        
+        let bannerX = bannerWidth / 2 - image.size.width / 2
+        let bannerY = bannerHeight / 2 - image.size.height / 2
+        
+        imageView.frame = CGRect(x: bannerX, y: bannerY , width: bannerWidth, height: bannerHeight)
+        imageView.contentMode = .scaleAspectFit
+        
+        navigationItem.titleView = imageView
     }
     
 

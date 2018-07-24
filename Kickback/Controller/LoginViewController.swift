@@ -15,18 +15,18 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var usernameTextfield: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!
+    @IBOutlet weak var login: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        login.layer.cornerRadius = 25
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     @IBAction func loginButton(_ sender: Any) {
+        
         HUD.show(.labeledProgress(title: "Logging In" , subtitle: ""))
         
         Auth.auth().signIn(withEmail: usernameTextfield.text!, password: passwordTextfield.text!) { (user, error) in
@@ -34,12 +34,15 @@ class ViewController: UIViewController {
             if error != nil {
                 print("error")
                 HUD.hide()
-                HUD.flash(.labeledError(title: "Login Failed", subtitle: "Re-enter email and Password") , delay: 2.5)
+                HUD.flash(.labeledError(title: "Login Failed", subtitle: "Re-enter email or password") , delay: 2)
+                self.passwordTextfield.text = ""
             }
             else {
                 print("Login successful")
                 HUD.hide()
                 HUD.flash(.labeledSuccess(title: "Login Successful", subtitle: ""), delay: 0.2)
+                
+                self.getUsername()
                 
                 //Saves login so user doesn't have to sign in every time the app is launched
                 UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
@@ -47,10 +50,30 @@ class ViewController: UIViewController {
                 
                 self.performSegue(withIdentifier: "goToHome", sender: self)
             }
-            //            HUD.hide()
-            //            HUD.flash(.labeledSuccess(title: "Login Successful", subtitle: ""), delay: 0.2)
-            //            self.performSegue(withIdentifier: "goToHome", sender: self)
         }
+    }
+    
+    func getUsername() {
+        
+        let email = usernameTextfield.text!
+        let ref = Database.database().reference().child("Users").queryOrdered(byChild: "Email").queryEqual(toValue: email)
+        
+        ref.observeSingleEvent(of: .value, with:{ (snapshot: DataSnapshot) in
+            
+            for snap in snapshot.children {
+                
+                let snapKey = snap as! DataSnapshot
+                let key = snapKey.key
+                
+                UserDefaults.standard.set(key, forKey: "username")
+                UserDefaults.standard.synchronize()
+                
+            }
+            
+            print("FINISHED")
+            
+        })
+        
     }
 
 
