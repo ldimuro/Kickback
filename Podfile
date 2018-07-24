@@ -12,7 +12,6 @@ pod 'Firebase'
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
 pod 'PKHUD'
-pod 'ZKCarousel'
 pod 'SwipeCellKit'
 
 end

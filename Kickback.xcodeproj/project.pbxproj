@@ -17,9 +17,11 @@
 		844C9DF020FC613E0029269D /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844C9DEF20FC613E0029269D /* HomePageViewController.swift */; };
 		8455AB1721004956009BCBDB /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455AB1621004956009BCBDB /* TabBarViewController.swift */; };
 		8455AB1921004DF7009BCBDB /* AddStationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455AB1821004DF7009BCBDB /* AddStationViewController.swift */; };
+		8478A77C2106D4A800FB099B /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8478A77B2106D4A800FB099B /* ProfilePageViewController.swift */; };
+		8478A77E2106E0A500FB099B /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8478A77D2106E0A500FB099B /* RegisterViewController.swift */; };
+		8478A7802106FB4F00FB099B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8478A77F2106FB4F00FB099B /* SearchViewController.swift */; };
 		849FBFF72101AA4000387044 /* HomePageNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FBFF62101AA4000387044 /* HomePageNavigationViewController.swift */; };
 		849FBFF92101AA9900387044 /* AddStationNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FBFF82101AA9900387044 /* AddStationNavigationViewController.swift */; };
-		849FBFFB2101B57200387044 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849FBFFA2101B57200387044 /* SettingsViewController.swift */; };
 		84EA632D20FDCC6100F84701 /* StationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA632B20FDCC6100F84701 /* StationTableViewCell.swift */; };
 		84EA632E20FDCC6100F84701 /* StationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EA632C20FDCC6100F84701 /* StationTableViewCell.xib */; };
 		84EA633020FDD60C00F84701 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA632F20FDD60C00F84701 /* Station.swift */; };
@@ -39,9 +41,11 @@
 		844C9DEF20FC613E0029269D /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		8455AB1621004956009BCBDB /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		8455AB1821004DF7009BCBDB /* AddStationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStationViewController.swift; sourceTree = "<group>"; };
+		8478A77B2106D4A800FB099B /* ProfilePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewController.swift; sourceTree = "<group>"; };
+		8478A77D2106E0A500FB099B /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		8478A77F2106FB4F00FB099B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		849FBFF62101AA4000387044 /* HomePageNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageNavigationViewController.swift; sourceTree = "<group>"; };
 		849FBFF82101AA9900387044 /* AddStationNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStationNavigationViewController.swift; sourceTree = "<group>"; };
-		849FBFFA2101B57200387044 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		84EA632B20FDCC6100F84701 /* StationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationTableViewCell.swift; sourceTree = "<group>"; };
 		84EA632C20FDCC6100F84701 /* StationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StationTableViewCell.xib; sourceTree = "<group>"; };
 		84EA632F20FDD60C00F84701 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
@@ -97,9 +101,11 @@
 				849FBFF52101AA0D00387044 /* Navigation Controllers */,
 				844C9DDB20FC576D0029269D /* AppDelegate.swift */,
 				844C9DDD20FC576D0029269D /* LoginViewController.swift */,
-				849FBFFA2101B57200387044 /* SettingsViewController.swift */,
+				8478A77D2106E0A500FB099B /* RegisterViewController.swift */,
 				844C9DEF20FC613E0029269D /* HomePageViewController.swift */,
+				8478A77F2106FB4F00FB099B /* SearchViewController.swift */,
 				8455AB1621004956009BCBDB /* TabBarViewController.swift */,
+				8478A77B2106D4A800FB099B /* ProfilePageViewController.swift */,
 				8455AB1821004DF7009BCBDB /* AddStationViewController.swift */,
 				8455AB1D2100557F009BCBDB /* Classes */,
 			);
@@ -268,7 +274,6 @@
 				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
-				"${BUILT_PRODUCTS_DIR}/ZKCarousel/ZKCarousel.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -280,7 +285,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZKCarousel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -297,10 +301,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				844C9DDE20FC576D0029269D /* LoginViewController.swift in Sources */,
+				8478A77E2106E0A500FB099B /* RegisterViewController.swift in Sources */,
 				849FBFF92101AA9900387044 /* AddStationNavigationViewController.swift in Sources */,
 				8455AB1921004DF7009BCBDB /* AddStationViewController.swift in Sources */,
-				849FBFFB2101B57200387044 /* SettingsViewController.swift in Sources */,
+				8478A77C2106D4A800FB099B /* ProfilePageViewController.swift in Sources */,
 				84EA633020FDD60C00F84701 /* Station.swift in Sources */,
+				8478A7802106FB4F00FB099B /* SearchViewController.swift in Sources */,
 				844C9DDC20FC576D0029269D /* AppDelegate.swift in Sources */,
 				84EA632D20FDCC6100F84701 /* StationTableViewCell.swift in Sources */,
 				8455AB1721004956009BCBDB /* TabBarViewController.swift in Sources */,

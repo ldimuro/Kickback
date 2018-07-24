@@ -36,23 +36,5 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         return true
     }
     
-//    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-//        print("Selected item")
-//    }
-//
-//    // UITabBarControllerDelegate
-//    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-//        print("Selected view controller: \(viewController)")
-//    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

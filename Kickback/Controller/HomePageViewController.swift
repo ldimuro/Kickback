@@ -13,6 +13,7 @@ import PKHUD
 class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var stationTableView: UITableView!
+    @IBOutlet weak var stationSwitcher: UISegmentedControl!
     
     var stationArray = [Station]()
     let user = Auth.auth().currentUser
@@ -85,7 +86,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         present(alert, animated: true, completion: nil)
     }
     
-    //Save tasks to phone using Codable
+    //Save tasks to Firebase
     func saveStation(station: String) {
         
         let addStation = Database.database().reference().child("Stations")
@@ -109,10 +110,11 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    //Load tasks from phone using Codable
+    //Load tasks from Firebase
     func loadStations() {
         
         HUD.show( .labeledProgress(title: "Loading Stations", subtitle: ""))
+        
         
         let stationDB = Database.database().reference().child("Stations")
         
@@ -138,6 +140,18 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             self.stationTableView.reloadData()
             
             HUD.hide()
+            
+        }
+    }
+    
+    @IBAction func stationSwitch(_ sender: Any) {
+        switch stationSwitcher.selectedSegmentIndex {
+        case 0: //MY STATIONS
+            print("My Stations")
+        case 1: //SHARED WITH ME
+            print("Shared With Me")
+        default:
+            break
         }
     }
     
