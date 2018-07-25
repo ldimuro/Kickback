@@ -11,9 +11,12 @@ import Firebase
 
 class ProfilePageViewController: UIViewController {
 
+    @IBOutlet weak var profilePicture: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        profilePicture.image = UIImage(named: UserDefaults.standard.string(forKey: "profilePicture")!)
         navigationItem.title = UserDefaults.standard.string(forKey: "username")
         
         // Do any additional setup after loading the view.
