@@ -18,6 +18,8 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var passwordTextfield: UITextField!
     @IBOutlet weak var signupButton: UIButton!
     
+    let defaultProfilePicArray = ["default-user-lightblue", "default-user-green", "default-user-red", "default-user-orange", "default-user-blue", "default-user-purple"]
+    
     var userArray = [String]()
     
     override func viewDidLoad() {
@@ -78,10 +80,13 @@ class RegisterViewController: UIViewController {
         
         let email = emailTextfield.text!
         let username = usernameTextfield.text!
+        let defaultProfilePic = "\(defaultProfilePicArray[Int(arc4random_uniform(UInt32(defaultProfilePicArray.count)))])"
         
-        Database.database().reference().child("Users").child(username).setValue(["Email": email])
+        Database.database().reference().child("Users").child(username).setValue(["Email": email,
+                                                                                 "Profile Picture": defaultProfilePic])
         
         UserDefaults.standard.set(username, forKey: "username")
+        UserDefaults.standard.set(defaultProfilePic, forKey: "profilePicture")
         UserDefaults.standard.synchronize()
         
     }

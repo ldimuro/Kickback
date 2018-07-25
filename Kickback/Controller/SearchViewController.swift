@@ -29,12 +29,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         searchbar.returnKeyType = UIReturnKeyType.done
         
         // Do any additional setup after loading the view.
+        searchTable.register(UINib(nibName: "SearchTableViewCell", bundle: nil), forCellReuseIdentifier: "searchCell")
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! SearchTableViewCell
         
-        cell.textLabel?.text = filteredArray[indexPath.row]
+        cell.usernameLabel.text = filteredArray[indexPath.row]
         
         return cell
     }
@@ -85,7 +86,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 }
             }
         })
-        
     }
     
 
