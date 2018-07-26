@@ -36,6 +36,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! SearchTableViewCell
         
         cell.usernameLabel.text = filteredArray[indexPath.row]
+        cell.profilePicture.image = UIImage(named: UserDefaults.standard.string(forKey: "profilePicture")!)
         
         return cell
     }
