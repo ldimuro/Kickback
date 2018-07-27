@@ -10,3 +10,4 @@
 //  default user icons made by Chanut [https://www.flaticon.com/authors/chanut] from www.flaticon.com
 //  music-note icon made by Smashicons [https://smashicons.com/] from www.flaticon.com
 //  profile icon made by Smashicons [https://smashicons.com/] from www.flaticon.com
+//  search-plus icon made by Smashicons [https://smashicons.com/] from www.flaticon.com

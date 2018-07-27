@@ -18,6 +18,11 @@ class ProfilePageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        profilePicture.layer.masksToBounds = false
+        profilePicture.layer.borderColor = UIColor.black.cgColor
+        profilePicture.layer.cornerRadius = profilePicture.frame.height/2
+        profilePicture.clipsToBounds = true
+        
         profilePicture.image = UIImage(named: UserDefaults.standard.string(forKey: "profilePicture")!)
         backdrop.image = UIImage(named: UserDefaults.standard.string(forKey: "profilePicture")!)
         
