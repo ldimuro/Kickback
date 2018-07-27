@@ -11,3 +11,4 @@
 //  music-note icon made by Smashicons [https://smashicons.com/] from www.flaticon.com
 //  profile icon made by Smashicons [https://smashicons.com/] from www.flaticon.com
 //  search-plus icon made by Smashicons [https://smashicons.com/] from www.flaticon.com
+//  friends icon made by Freepik [https://www.freepik.com/] from www.flaticon.com

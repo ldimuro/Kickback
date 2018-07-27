@@ -32,8 +32,8 @@
                         <color key="textColor" red="0.92964053150000003" green="0.4597077966" blue="0.43527054790000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="search-plus" translatesAutoresizingMaskIntoConstraints="NO" id="u3T-gR-O8i">
-                        <rect key="frame" x="328" y="19" width="31" height="31"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="empty-button" translatesAutoresizingMaskIntoConstraints="NO" id="Uze-zP-bfh">
+                        <rect key="frame" x="329" y="19" width="30" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
                 </subviews>
@@ -52,6 +52,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="search-plus" width="256" height="256"/>
+        <image name="empty-button" width="256" height="256"/>
     </resources>
 </document>

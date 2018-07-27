@@ -11,4 +11,5 @@ import Foundation
 class SearchUser {
     var user : String = ""
     var profilePic : String = ""
+    var followed : Bool = false
 }

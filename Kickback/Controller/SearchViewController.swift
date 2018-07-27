@@ -78,6 +78,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
+    
+    
     //Creates an array of all users in Firebase
     func getAllUsers() {
         
