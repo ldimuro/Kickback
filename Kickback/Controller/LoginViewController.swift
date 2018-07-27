@@ -42,7 +42,7 @@ class ViewController: UIViewController {
                 HUD.hide()
                 HUD.flash(.labeledSuccess(title: "Login Successful", subtitle: ""), delay: 0.2)
                 
-                self.getUsername()
+                self.getUser()
                 
                 //Saves login so user doesn't have to sign in every time the app is launched
                 UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
@@ -53,7 +53,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func getUsername() {
+    func getUser() {
         
         let email = usernameTextfield.text!
         let ref = Database.database().reference().child("Users").queryOrdered(byChild: "Email").queryEqual(toValue: email)
@@ -65,7 +65,11 @@ class ViewController: UIViewController {
                 let snapKey = snap as! DataSnapshot
                 let key = snapKey.key
                 
+                let value = snapKey.value as! Dictionary<String,Any>
+                let profilePic = value["Profile Picture"] as! String
+                
                 UserDefaults.standard.set(key, forKey: "username")
+                UserDefaults.standard.set(profilePic, forKey: "profilePicture")
                 UserDefaults.standard.synchronize()
                 
             }
@@ -73,6 +77,7 @@ class ViewController: UIViewController {
             print("FINISHED")
             
         })
+        
         
     }
 

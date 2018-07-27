@@ -11,6 +11,8 @@ pod 'SwiftyJSON'
 pod 'Firebase'
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
+pod 'Firebase/Core'
+pod 'Firebase/Storage'
 pod 'PKHUD'
 pod 'SwipeCellKit'
 

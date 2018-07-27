@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,26 +26,38 @@
                             <constraint firstAttribute="width" constant="45" id="UW1-Sg-w2Z"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="xec-17-LSX">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="xec-17-LSX">
                         <rect key="frame" x="71" y="12" width="236" height="45"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="236" id="Nwv-gg-dux"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
                         <color key="textColor" red="0.92964053150000003" green="0.4597077966" blue="0.43527054790000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="empty-button" translatesAutoresizingMaskIntoConstraints="NO" id="Uze-zP-bfh">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dlc-mC-ISD">
                         <rect key="frame" x="329" y="19" width="30" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </imageView>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="3XG-st-miT"/>
+                            <constraint firstAttribute="height" constant="30" id="sjr-ri-TEc"/>
+                        </constraints>
+                        <state key="normal" image="empty-button"/>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="xec-17-LSX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="EvR-hZ-pm9"/>
                     <constraint firstItem="1BL-2j-yHe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="JtN-Yu-HGP"/>
                     <constraint firstAttribute="bottom" secondItem="1BL-2j-yHe" secondAttribute="bottom" constant="12" id="bqw-0F-Fcf"/>
                     <constraint firstItem="1BL-2j-yHe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="hHV-8O-v1U"/>
+                    <constraint firstItem="Dlc-mC-ISD" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="mhM-gE-jI9"/>
+                    <constraint firstItem="Dlc-mC-ISD" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="u6t-uC-ifm"/>
+                    <constraint firstItem="xec-17-LSX" firstAttribute="leading" secondItem="1BL-2j-yHe" secondAttribute="trailing" constant="14" id="uUm-v6-wMa"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="xec-17-LSX" secondAttribute="bottom" constant="1.5" id="vHw-qz-pyY"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="followButton" destination="Dlc-mC-ISD" id="daG-UV-JcL"/>
                 <outlet property="profilePicture" destination="1BL-2j-yHe" id="cMQ-gc-gUD"/>
                 <outlet property="usernameLabel" destination="xec-17-LSX" id="rDb-Cx-jFs"/>
             </connections>

@@ -12,3 +12,6 @@
 //  profile icon made by Smashicons [https://smashicons.com/] from www.flaticon.com
 //  search-plus icon made by Smashicons [https://smashicons.com/] from www.flaticon.com
 //  friends icon made by Freepik [https://www.freepik.com/] from www.flaticon.com
+//  empty-button made by Daniel Bruce [https://www.flaticon.com/authors/daniel-bruce] from www.flaticon.com
+//  checked-button made by Google [https://www.flaticon.com/authors/google] from www.flaticon.com
+

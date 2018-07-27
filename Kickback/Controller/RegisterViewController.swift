@@ -83,7 +83,8 @@ class RegisterViewController: UIViewController {
         let defaultProfilePic = "\(defaultProfilePicArray[Int(arc4random_uniform(UInt32(defaultProfilePicArray.count)))])"
         
         Database.database().reference().child("Users").child(username).setValue(["Email": email,
-                                                                                 "Profile Picture": defaultProfilePic])
+                                                                                 "Profile Picture": defaultProfilePic,
+                                                                                 "Friends": ["N/A"]])
         
         UserDefaults.standard.set(username, forKey: "username")
         UserDefaults.standard.set(defaultProfilePic, forKey: "profilePicture")
