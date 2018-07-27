@@ -15,13 +15,17 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var searchTable: UITableView!
     
     var isSearching = false
-    var userArray = [String]()
-    var filteredArray = [String]()
+    var userArray = [SearchUser]()
+    var filteredArray = [SearchUser]()
+    var userFriends = [String]()
+     var previousCount = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         getAllUsers()
+        getUserFriends()
         
         searchTable.delegate = self
         searchTable.dataSource = self
@@ -32,12 +36,70 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         searchTable.register(UINib(nibName: "SearchTableViewCell", bundle: nil), forCellReuseIdentifier: "searchCell")
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        searchbar.text = ""
+        filteredArray.removeAll()
+        searchTable.reloadData()
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! SearchTableViewCell
         
-        cell.usernameLabel.text = filteredArray[indexPath.row]
+        cell.selectionStyle = .none
+        
+        if userFriends.contains(filteredArray[indexPath.row].user) {
+            filteredArray[indexPath.row].followed = true
+        } else {
+            filteredArray[indexPath.row].followed = false
+        }
+        
+        cell.usernameLabel.text = filteredArray[indexPath.row].user
+        cell.profilePicture.image = UIImage(named: filteredArray[indexPath.row].profilePic)
+        
+        cell.followButton.addTarget(self, action: #selector(self.followedTapped(sender:)), for: .touchUpInside)
+        cell.followButton.tag = indexPath.row
+        
+        if filteredArray[indexPath.row].followed {
+            
+            //Fade in animation
+            UIView.transition(with: cell.followButton as UIView, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                cell.followButton.setImage(UIImage(named: "checked-button"), for: .normal)
+            }, completion: nil)
+            
+            
+        } else {
+            
+            //Fade out animation
+            UIView.transition(with: cell.followButton as UIView, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                cell.followButton.setImage(UIImage(named: "empty-button"), for: .normal)
+            }, completion: nil)
+        }
         
         return cell
+    }
+    
+    @objc func followedTapped(sender : UIButton) {
+        
+        if filteredArray[sender.tag].followed {
+            userFriends = userFriends.filter {$0 != filteredArray[sender.tag].user}
+        } else {
+            userFriends.append(filteredArray[sender.tag].user)
+        }
+        
+        Database.database().reference().child("Users").child(UserDefaults.standard.string(forKey: "username")!).child("Friends").setValue(userFriends){
+            (error, reference) in
+            
+            if(error != nil) {
+                print(error!)
+            }
+            else {
+                print("Friend Added!")
+            }
+        }
+        
+        print(userFriends)
+        
+        searchTable.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -46,30 +108,45 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     //Search Bar functionality
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        
         if(searchBar.text == nil || searchBar.text == "") {
             isSearching = false
-            view.endEditing(true)
+//            view.endEditing(true)
             
             print("IS SEARCHING: \(isSearching)")
             
-            filteredArray = [String]()
+            filteredArray = [SearchUser]()
             
-            searchTable.reloadData()
+            previousCount = 0
+            
+            let range = NSMakeRange(0, self.searchTable.numberOfSections)
+            let sections = NSIndexSet(indexesIn: range)
+            self.searchTable.reloadSections(sections as IndexSet, with: .automatic)
             
         }
         else {
             isSearching = true
             print("IS SEARCHING = \(isSearching)")
+            print(userFriends)
             
-            filteredArray = userArray.filter({($0.contains(searchbar.text!.lowercased()))})
+            filteredArray = userArray.filter({($0.user.contains(searchbar.text!.lowercased()))})
             
-            print("Filtered data count: \(filteredArray.count)")
-            print("Row data count: \(userArray.count)")
+            //Ensures smooth row animation
+            if previousCount != 0 && filteredArray.count == previousCount {
+                searchTable.reloadData()
+            } else {
+                let range = NSMakeRange(0, self.searchTable.numberOfSections)
+                let sections = NSIndexSet(indexesIn: range)
+                self.searchTable.reloadSections(sections as IndexSet, with: .automatic)
+            }
             
-            searchTable.reloadData()
+            previousCount = filteredArray.count
+            
         }
         
     }
+    
     
     //Creates an array of all users in Firebase
     func getAllUsers() {
@@ -81,15 +158,35 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let snap = child as! DataSnapshot
                 let key = snap.key
                 
+                let snapshotValue = snap.value as! Dictionary<String,Any>
+                let profilePic = snapshotValue["Profile Picture"] as! String
+                
+                let searchUserDB = SearchUser()
+                searchUserDB.profilePic = profilePic
+                
                 if key != UserDefaults.standard.string(forKey: "username") {
-                    self.userArray.append(key)
+                    searchUserDB.user = key
                 }
+                
+                self.userArray.append(searchUserDB)
             }
         })
     }
     
-
+    func getUserFriends() {
+        let ref = Database.database().reference().child("Users").child(UserDefaults.standard.string(forKey: "username")!).child("Friends")
+        
+        ref.observeSingleEvent(of: .value) { (snapshot) in
+            for snap in snapshot.children {
+                
+                let friend = (snap as! DataSnapshot).value! as! String
+                
+                if friend != "N/A" {
+                    self.userFriends.append("\(friend)")
+                }
+            }
+        }
+    }
     
     
-
 }

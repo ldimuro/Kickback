@@ -25,6 +25,7 @@
 		84A13A0A2108509400146E98 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A13A082108509400146E98 /* SearchTableViewCell.swift */; };
 		84A13A0B2108509400146E98 /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A13A092108509400146E98 /* SearchTableViewCell.xib */; };
 		84A13A0D21085C5300146E98 /* FlaticonCredits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A13A0C21085C5300146E98 /* FlaticonCredits.swift */; };
+		84BF6455210AB9DB007360A1 /* SearchUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BF6454210AB9DB007360A1 /* SearchUser.swift */; };
 		84EA632D20FDCC6100F84701 /* StationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA632B20FDCC6100F84701 /* StationTableViewCell.swift */; };
 		84EA632E20FDCC6100F84701 /* StationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EA632C20FDCC6100F84701 /* StationTableViewCell.xib */; };
 		84EA633020FDD60C00F84701 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA632F20FDD60C00F84701 /* Station.swift */; };
@@ -52,6 +53,7 @@
 		84A13A082108509400146E98 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		84A13A092108509400146E98 /* SearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
 		84A13A0C21085C5300146E98 /* FlaticonCredits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlaticonCredits.swift; sourceTree = "<group>"; };
+		84BF6454210AB9DB007360A1 /* SearchUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUser.swift; sourceTree = "<group>"; };
 		84EA632B20FDCC6100F84701 /* StationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationTableViewCell.swift; sourceTree = "<group>"; };
 		84EA632C20FDCC6100F84701 /* StationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StationTableViewCell.xib; sourceTree = "<group>"; };
 		84EA632F20FDD60C00F84701 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				84EA632F20FDD60C00F84701 /* Station.swift */,
+				84BF6454210AB9DB007360A1 /* SearchUser.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 				844C9DDE20FC576D0029269D /* LoginViewController.swift in Sources */,
 				8478A77E2106E0A500FB099B /* RegisterViewController.swift in Sources */,
 				849FBFF92101AA9900387044 /* AddStationNavigationViewController.swift in Sources */,
+				84BF6455210AB9DB007360A1 /* SearchUser.swift in Sources */,
 				8455AB1921004DF7009BCBDB /* AddStationViewController.swift in Sources */,
 				8478A77C2106D4A800FB099B /* ProfilePageViewController.swift in Sources */,
 				84EA633020FDD60C00F84701 /* Station.swift in Sources */,
