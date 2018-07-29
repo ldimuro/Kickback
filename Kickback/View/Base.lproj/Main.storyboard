@@ -255,27 +255,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6m-xp-gIz">
-                                <rect key="frame" x="119" y="630" width="137" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <state key="normal" title="Log Out">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="logOutButton:" destination="0ZS-rF-fsV" eventType="touchUpInside" id="tx0-iQ-ca4"/>
-                                    <action selector="logoutButton:" destination="ahk-fr-1UB" eventType="touchUpInside" id="QwR-C4-fQg"/>
-                                </connections>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="radiohead" translatesAutoresizingMaskIntoConstraints="NO" id="Iby-JS-tDh">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="317"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Iby-JS-tDh">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DBE-1a-VwT">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="317"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="E5N-UQ-jUX">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="317"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="friends" translatesAutoresizingMaskIntoConstraints="NO" id="2qb-2s-DMw">
@@ -304,6 +292,18 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6m-xp-gIz">
+                                <rect key="frame" x="119" y="630" width="137" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <state key="normal" title="Log Out">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="logOutButton:" destination="0ZS-rF-fsV" eventType="touchUpInside" id="tx0-iQ-ca4"/>
+                                    <action selector="logoutButton:" destination="ahk-fr-1UB" eventType="touchUpInside" id="QwR-C4-fQg"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vha-rV-PjX">
                                 <rect key="frame" x="140" y="20" width="94" height="94"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -520,7 +520,6 @@
         <image name="people" width="30" height="30"/>
         <image name="plus" width="30" height="30"/>
         <image name="radio_waves" width="30" height="30"/>
-        <image name="radiohead" width="220" height="220"/>
         <image name="search" width="30" height="30"/>
         <image name="user_male" width="30" height="30"/>
     </resources>

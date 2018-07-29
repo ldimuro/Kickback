@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseStorage
 
 class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
@@ -17,6 +18,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var isSearching = false
     var userArray = [SearchUser]()
     var filteredArray = [SearchUser]()
+    var profilePicArray = [UIImage]()
     var userFriends = [String]()
      var previousCount = 0
     
@@ -54,7 +56,9 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         cell.usernameLabel.text = filteredArray[indexPath.row].user
-        cell.profilePicture.image = UIImage(named: filteredArray[indexPath.row].profilePic)
+        cell.profilePicture.image = filteredArray[indexPath.row].profilePic
+//        cell.profilePicture.image = UIImage(named: filteredArray[indexPath.row].profilePic)
+//        cell.profilePicture.image = profilePicArray[1]
         
         cell.followButton.addTarget(self, action: #selector(self.followedTapped(sender:)), for: .touchUpInside)
         cell.followButton.tag = indexPath.row
@@ -74,6 +78,21 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 cell.followButton.setImage(UIImage(named: "empty-button"), for: .normal)
             }, completion: nil)
         }
+        
+        Database.database().reference().child("Users").child(filteredArray[indexPath.row].user).observeSingleEvent(of: .value, with: { (snapshot) in
+            // check if user has photo
+            if snapshot.hasChild("Profile Picture"){
+                // set image locatin
+                let filePath = "Profile Pictures/\(self.filteredArray[indexPath.row].user)-profile"
+                // Assuming a < 10MB file, though you can change that
+                Storage.storage().reference().child(filePath).getData(maxSize: 10*1024*1024, completion: { (data, error) in
+
+                    let userPhoto = UIImage(data: data!)
+                    cell.profilePicture.image = userPhoto
+
+                })
+            }
+        })
         
         return cell
     }
@@ -129,6 +148,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             isSearching = true
             print("IS SEARCHING = \(isSearching)")
             print(userFriends)
+            print("IMAGE ARRAY: \(profilePicArray.count)")
             
             filteredArray = userArray.filter({($0.user.contains(searchbar.text!.lowercased()))})
             
@@ -162,13 +182,33 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let profilePic = snapshotValue["Profile Picture"] as! String
                 
                 let searchUserDB = SearchUser()
-                searchUserDB.profilePic = profilePic
+                
+                let filePath = "Profile Pictures/\(key)-profile"
+                // Assuming a < 10MB file, though you can change that
+                Storage.storage().reference().child(filePath).getData(maxSize: 10*1024*1024, completion: { (data, error) in
+                    
+                    let userPhoto = UIImage(data: data!)
+                    searchUserDB.profilePic = userPhoto
+//                    self.profilePicArray.append(userPhoto!)
+                })
+
+                
+//                searchUserDB.profilePic = profilePic
                 
                 if key != UserDefaults.standard.string(forKey: "username") {
                     searchUserDB.user = key
                 }
                 
                 self.userArray.append(searchUserDB)
+                
+//                let filePath = "Profile Pictures/\(key)-profile"
+//                // Assuming a < 10MB file, though you can change that
+//                Storage.storage().reference().child(filePath).getData(maxSize: 10*1024*1024, completion: { (data, error) in
+//
+//                    let userPhoto = UIImage(data: data!)
+//                    self.profilePicArray.append(userPhoto!)
+//                })
+                
             }
         })
     }

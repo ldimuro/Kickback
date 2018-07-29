@@ -9,6 +9,7 @@
 import UIKit
 import UIKit
 import Firebase
+import FirebaseStorage
 import PKHUD
 
 class ViewController: UIViewController {
@@ -72,15 +73,26 @@ class ViewController: UIViewController {
                 UserDefaults.standard.set(profilePic, forKey: "profilePicture")
                 UserDefaults.standard.synchronize()
                 
+                let filePath = "Profile Pictures/\(key)-profile"
+                // Assuming a < 10MB file, though you can change that
+                Storage.storage().reference().child(filePath).getData(maxSize: 10*1024*1024, completion: { (data, error) in
+                    
+                    let userPhoto = UIImage(data: data!)
+                    UserDataArray.profilePicture = userPhoto
+                })
+                
             }
             
             print("FINISHED")
             
         })
         
-        
     }
 
 
+}
+
+struct UserDataArray {
+    static var profilePicture : UIImage?
 }
 

@@ -22,7 +22,8 @@ class ProfilePageViewController: UIViewController, UIImagePickerControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getProfilePicture()
+        profilePicture.image = UserDataArray.profilePicture
+        backdrop.image = UserDataArray.profilePicture
         
         imagePicker.delegate = self
         
@@ -32,8 +33,8 @@ class ProfilePageViewController: UIViewController, UIImagePickerControllerDelega
         profilePicture.layer.cornerRadius = profilePicture.frame.height/2
         profilePicture.clipsToBounds = true
         
-        profilePicture.image = UIImage(named: UserDefaults.standard.string(forKey: "profilePicture")!)
-        backdrop.image = UIImage(named: UserDefaults.standard.string(forKey: "profilePicture")!)
+//        profilePicture.image = UIImage(named: UserDefaults.standard.string(forKey: "profilePicture")!)
+//        backdrop.image = UIImage(named: UserDefaults.standard.string(forKey: "profilePicture")!)
         
         usernameLabel.text = UserDefaults.standard.string(forKey: "username")
         
@@ -62,7 +63,10 @@ class ProfilePageViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if var pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            
+            pickedImage = pickedImage.resizeWithWidth(width: 256)!
+            
             profilePicture.contentMode = .scaleAspectFill
             backdrop.contentMode = .scaleToFill
             backdrop.image = pickedImage
@@ -71,12 +75,12 @@ class ProfilePageViewController: UIViewController, UIImagePickerControllerDelega
             
             //Save Profile Picture to Firebase
             var data = Data()
-            data = UIImageJPEGRepresentation(profilePicture.image!, 0.8)!
+            data = UIImageJPEGRepresentation(profilePicture.image!, 0.2)!
             
             let filepath = "Profile Pictures/\(UserDefaults.standard.string(forKey: "username")!)-profile"
             let storageRef = Storage.storage().reference().child(filepath)
             let metaData = StorageMetadata()
-            metaData.contentType = "image/jpg"
+            metaData.contentType = "image/jpeg"
             storageRef.putData(data, metadata: metaData){(metaData, error) in
                 if let error = error {
                     print(error.localizedDescription)
@@ -88,7 +92,7 @@ class ProfilePageViewController: UIViewController, UIImagePickerControllerDelega
                         } else {
                             let downloadURL = url
                             Database.database().reference().child("Users").child(UserDefaults.standard.string(forKey: "username")!).updateChildValues(["Profile Picture": "\(downloadURL!)"])
-                            UserDefaults.standard.set("\(downloadURL)", forKey: "profilePicture")
+                            UserDefaults.standard.set("\(downloadURL!)", forKey: "profilePicture")
                         }
                     })
                 }
@@ -128,23 +132,6 @@ class ProfilePageViewController: UIViewController, UIImagePickerControllerDelega
         }
     }
     
-    func getProfilePicture() {
-        let username = UserDefaults.standard.string(forKey: "username")
-        
-        Database.database().reference().child("Users").child(username!).observeSingleEvent(of: .value, with: { (snapshot) in
-            // check if user has photo
-            if snapshot.hasChild("Profile Picture"){
-                // set image locatin
-                let filePath = "Profile Pictures/\(username!)-profile"
-                // Assuming a < 10MB file, though you can change that
-                Storage.storage().reference().child(filePath).getData(maxSize: 10*1024*1024, completion: { (data, error) in
-                    
-                    let userPhoto = UIImage(data: data!)
-                    self.profilePicture.image = userPhoto
-                    self.backdrop.image = userPhoto
-                })
-            }
-        })
-    }
-    
 }
+
+
