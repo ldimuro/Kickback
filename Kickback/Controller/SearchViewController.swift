@@ -79,19 +79,12 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }, completion: nil)
         }
         
-        Database.database().reference().child("Users").child(filteredArray[indexPath.row].user).observeSingleEvent(of: .value, with: { (snapshot) in
-            // check if user has photo
-            if snapshot.hasChild("Profile Picture"){
-                // set image locatin
-                let filePath = "Profile Pictures/\(self.filteredArray[indexPath.row].user)-profile"
-                // Assuming a < 10MB file, though you can change that
-                Storage.storage().reference().child(filePath).getData(maxSize: 10*1024*1024, completion: { (data, error) in
-
-                    let userPhoto = UIImage(data: data!)
-                    cell.profilePicture.image = userPhoto
-
-                })
-            }
+        let filePath = "Profile Pictures/\(self.filteredArray[indexPath.row].user)-profile"
+        Storage.storage().reference().child(filePath).getData(maxSize: 10*1024*1024, completion: { (data, error) in
+            
+            let userPhoto = UIImage(data: data!)
+            cell.profilePicture.image = userPhoto
+            
         })
         
         return cell

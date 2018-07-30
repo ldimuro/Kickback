@@ -317,6 +317,7 @@
                     </view>
                     <connections>
                         <outlet property="backdrop" destination="Iby-JS-tDh" id="ajb-xc-dTO"/>
+                        <outlet property="editProfilePictureButton" destination="Vha-rV-PjX" id="5hX-df-gti"/>
                         <outlet property="profilePicture" destination="JOM-Me-pt1" id="bWW-iC-V3j"/>
                         <outlet property="usernameLabel" destination="Oua-yv-JjE" id="cFL-nA-zNt"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="logout" id="0eQ-cS-bCe"/>

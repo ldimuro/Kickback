@@ -16,8 +16,10 @@ class ProfilePageViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var backdrop: UIImageView!
+    @IBOutlet weak var editProfilePictureButton: UIButton!
     
     let imagePicker = UIImagePickerController()
+    let defaultProfilePictures = [#imageLiteral(resourceName: "default-user-red"), #imageLiteral(resourceName: "default-user-blue"), #imageLiteral(resourceName: "default-user-green"), #imageLiteral(resourceName: "default-user-orange"), #imageLiteral(resourceName: "default-user-purple"), #imageLiteral(resourceName: "default-user-lightblue")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +43,10 @@ class ProfilePageViewController: UIViewController, UIImagePickerControllerDelega
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        profilePicture.alpha = 1.0
+    }
+    
     @IBAction func logoutButton(_ sender: Any) {
         
         try! Auth.auth().signOut()
@@ -54,12 +60,49 @@ class ProfilePageViewController: UIViewController, UIImagePickerControllerDelega
     
     
     @IBAction func editProfilePicture(_ sender: Any) {
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
+//        editProfilePictureButton.setTitleColor(UIColor.grayColor(), forState: UIControlState.Selected)
+        profilePicture.alpha = 0.5
         
-        checkPermission()
+        showAlert()
         
 //        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func showAlert() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Choose Photo", style: .default , handler:{ (UIAlertAction)in
+            print("User clicked Choose Photo")
+            
+            self.imagePicker.allowsEditing = false
+            self.imagePicker.sourceType = .photoLibrary
+            
+            self.checkPermission()
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive , handler:{ (UIAlertAction)in
+            print("User clicked Delete button")
+            self.profilePicture.alpha = 1.0
+            
+            var image = self.defaultProfilePictures[Int(arc4random_uniform(UInt32(self.defaultProfilePictures.count)))]
+            image = image.resizeWithWidth(width: 256)!
+            self.profilePicture.image = image
+            self.backdrop.image = image
+            
+            UserDataArray.profilePicture = image
+            
+            self.savePictureToFirebase()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:{ (UIAlertAction)in
+            print("Cancelled")
+            self.profilePicture.alpha = 1.0
+        }))
+        
+        self.present(alert, animated: true, completion: {
+            
+        })
     }
     
     @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -72,31 +115,34 @@ class ProfilePageViewController: UIViewController, UIImagePickerControllerDelega
             backdrop.image = pickedImage
             profilePicture.image = pickedImage
             
+            UserDataArray.profilePicture = pickedImage
             
-            //Save Profile Picture to Firebase
-            var data = Data()
-            data = UIImageJPEGRepresentation(profilePicture.image!, 0.2)!
+            savePictureToFirebase()
             
-            let filepath = "Profile Pictures/\(UserDefaults.standard.string(forKey: "username")!)-profile"
-            let storageRef = Storage.storage().reference().child(filepath)
-            let metaData = StorageMetadata()
-            metaData.contentType = "image/jpeg"
-            storageRef.putData(data, metadata: metaData){(metaData, error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                    return
-                } else {
-                    storageRef.downloadURL(completion: { (url, error) in
-                        if let error = error {
-                            print(error)
-                        } else {
-                            let downloadURL = url
-                            Database.database().reference().child("Users").child(UserDefaults.standard.string(forKey: "username")!).updateChildValues(["Profile Picture": "\(downloadURL!)"])
-                            UserDefaults.standard.set("\(downloadURL!)", forKey: "profilePicture")
-                        }
-                    })
-                }
-            }
+//            //Save Profile Picture to Firebase
+//            var data = Data()
+//            data = UIImageJPEGRepresentation(profilePicture.image!, 0.2)!
+//
+//            let filepath = "Profile Pictures/\(UserDefaults.standard.string(forKey: "username")!)-profile"
+//            let storageRef = Storage.storage().reference().child(filepath)
+//            let metaData = StorageMetadata()
+//            metaData.contentType = "image/jpeg"
+//            storageRef.putData(data, metadata: metaData){(metaData, error) in
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                    return
+//                } else {
+//                    storageRef.downloadURL(completion: { (url, error) in
+//                        if let error = error {
+//                            print(error)
+//                        } else {
+//                            let downloadURL = url
+//                            Database.database().reference().child("Users").child(UserDefaults.standard.string(forKey: "username")!).updateChildValues(["Profile Picture": "\(downloadURL!)"])
+//                            UserDefaults.standard.set("\(downloadURL!)", forKey: "profilePicture")
+//                        }
+//                    })
+//                }
+//            }
         }
         
         dismiss(animated: true, completion: nil)
@@ -104,6 +150,33 @@ class ProfilePageViewController: UIViewController, UIImagePickerControllerDelega
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    func savePictureToFirebase() {
+        //Save Profile Picture to Firebase
+        var data = Data()
+        data = UIImageJPEGRepresentation(profilePicture.image!, 0.2)!
+        
+        let filepath = "Profile Pictures/\(UserDefaults.standard.string(forKey: "username")!)-profile"
+        let storageRef = Storage.storage().reference().child(filepath)
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/jpeg"
+        storageRef.putData(data, metadata: metaData){(metaData, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            } else {
+                storageRef.downloadURL(completion: { (url, error) in
+                    if let error = error {
+                        print(error)
+                    } else {
+                        let downloadURL = url
+                        Database.database().reference().child("Users").child(UserDefaults.standard.string(forKey: "username")!).updateChildValues(["Profile Picture": "\(downloadURL!)"])
+                        UserDefaults.standard.set("\(downloadURL!)", forKey: "profilePicture")
+                    }
+                })
+            }
+        }
     }
     
     func checkPermission() {
