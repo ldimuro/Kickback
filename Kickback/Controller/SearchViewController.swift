@@ -57,8 +57,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         cell.usernameLabel.text = filteredArray[indexPath.row].user
         cell.profilePicture.image = filteredArray[indexPath.row].profilePic
-//        cell.profilePicture.image = UIImage(named: filteredArray[indexPath.row].profilePic)
-//        cell.profilePicture.image = profilePicArray[1]
         
         cell.followButton.addTarget(self, action: #selector(self.followedTapped(sender:)), for: .touchUpInside)
         cell.followButton.tag = indexPath.row
@@ -171,8 +169,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let snap = child as! DataSnapshot
                 let key = snap.key
                 
-                let snapshotValue = snap.value as! Dictionary<String,Any>
-                let profilePic = snapshotValue["Profile Picture"] as! String
+//                let snapshotValue = snap.value as! Dictionary<String,Any>
+//                let profilePic = snapshotValue["Profile Picture"] as! String
                 
                 let searchUserDB = SearchUser()
                 

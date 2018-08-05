@@ -73,9 +73,6 @@ class RegisterViewController: UIViewController {
                 }
             }
         }
-        
-        
-        
     }
     
     //Adds user to Firebase if this is their first time logging in
@@ -104,7 +101,7 @@ class RegisterViewController: UIViewController {
         
         //Save Profile Picture to Firebase
         var data = Data()
-        data = UIImageJPEGRepresentation(image, 0.2)!
+        data = UIImageJPEGRepresentation(image, 0.5)!
         
         let filepath = "Profile Pictures/\(UserDefaults.standard.string(forKey: "username")!)-profile"
         let storageRef = Storage.storage().reference().child(filepath)
@@ -143,7 +140,6 @@ class RegisterViewController: UIViewController {
                 self.userArray.append(key)
             }
         })
-        
     }
     
     

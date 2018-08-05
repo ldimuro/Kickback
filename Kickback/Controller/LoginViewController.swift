@@ -80,13 +80,8 @@ class ViewController: UIViewController {
                     let userPhoto = UIImage(data: data!)
                     UserDataArray.profilePicture = userPhoto
                 })
-                
             }
-            
-            print("FINISHED")
-            
         })
-        
     }
 
 

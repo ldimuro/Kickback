@@ -118,31 +118,7 @@ class ProfilePageViewController: UIViewController, UIImagePickerControllerDelega
             UserDataArray.profilePicture = pickedImage
             
             savePictureToFirebase()
-            
-//            //Save Profile Picture to Firebase
-//            var data = Data()
-//            data = UIImageJPEGRepresentation(profilePicture.image!, 0.2)!
-//
-//            let filepath = "Profile Pictures/\(UserDefaults.standard.string(forKey: "username")!)-profile"
-//            let storageRef = Storage.storage().reference().child(filepath)
-//            let metaData = StorageMetadata()
-//            metaData.contentType = "image/jpeg"
-//            storageRef.putData(data, metadata: metaData){(metaData, error) in
-//                if let error = error {
-//                    print(error.localizedDescription)
-//                    return
-//                } else {
-//                    storageRef.downloadURL(completion: { (url, error) in
-//                        if let error = error {
-//                            print(error)
-//                        } else {
-//                            let downloadURL = url
-//                            Database.database().reference().child("Users").child(UserDefaults.standard.string(forKey: "username")!).updateChildValues(["Profile Picture": "\(downloadURL!)"])
-//                            UserDefaults.standard.set("\(downloadURL!)", forKey: "profilePicture")
-//                        }
-//                    })
-//                }
-//            }
+
         }
         
         dismiss(animated: true, completion: nil)
@@ -155,7 +131,7 @@ class ProfilePageViewController: UIViewController, UIImagePickerControllerDelega
     func savePictureToFirebase() {
         //Save Profile Picture to Firebase
         var data = Data()
-        data = UIImageJPEGRepresentation(profilePicture.image!, 0.2)!
+        data = UIImageJPEGRepresentation(profilePicture.image!, 0.5)!
         
         let filepath = "Profile Pictures/\(UserDefaults.standard.string(forKey: "username")!)-profile"
         let storageRef = Storage.storage().reference().child(filepath)
