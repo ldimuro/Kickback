@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseStorage
 import PKHUD
 
 class RegisterViewController: UIViewController {
@@ -19,6 +20,8 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var signupButton: UIButton!
     
     let defaultProfilePicArray = ["default-user-lightblue", "default-user-green", "default-user-red", "default-user-orange", "default-user-blue", "default-user-purple"]
+    
+    let defaultProfilePictures = [#imageLiteral(resourceName: "default-user-red"), #imageLiteral(resourceName: "default-user-blue"), #imageLiteral(resourceName: "default-user-green"), #imageLiteral(resourceName: "default-user-orange"), #imageLiteral(resourceName: "default-user-purple"), #imageLiteral(resourceName: "default-user-lightblue")]
     
     var userArray = [String]()
     
@@ -70,9 +73,6 @@ class RegisterViewController: UIViewController {
                 }
             }
         }
-        
-        
-        
     }
     
     //Adds user to Firebase if this is their first time logging in
@@ -80,16 +80,50 @@ class RegisterViewController: UIViewController {
         
         let email = emailTextfield.text!
         let username = usernameTextfield.text!
-        let defaultProfilePic = "\(defaultProfilePicArray[Int(arc4random_uniform(UInt32(defaultProfilePicArray.count)))])"
         
         Database.database().reference().child("Users").child(username).setValue(["Email": email,
-                                                                                 "Profile Picture": defaultProfilePic,
+                                                                                 "Profile Picture": "N/A",
                                                                                  "Friends": ["N/A"]])
         
         UserDefaults.standard.set(username, forKey: "username")
-        UserDefaults.standard.set(defaultProfilePic, forKey: "profilePicture")
         UserDefaults.standard.synchronize()
         
+        createProfilePic()
+        
+    }
+    
+    func createProfilePic() {
+        
+        var image = defaultProfilePictures[Int(arc4random_uniform(UInt32(defaultProfilePictures.count)))]
+        image = image.resizeWithWidth(width: 256)!
+        
+        UserDataArray.profilePicture = image
+        
+        //Save Profile Picture to Firebase
+        var data = Data()
+        data = UIImageJPEGRepresentation(image, 0.5)!
+        
+        let filepath = "Profile Pictures/\(UserDefaults.standard.string(forKey: "username")!)-profile"
+        let storageRef = Storage.storage().reference().child(filepath)
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/jpeg"
+        storageRef.putData(data, metadata: metaData){(metaData, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            } else {
+                storageRef.downloadURL(completion: { (url, error) in
+                    if let error = error {
+                        print(error)
+                    } else {
+                        let downloadURL = url
+                        Database.database().reference().child("Users").child(UserDefaults.standard.string(forKey: "username")!).updateChildValues(["Profile Picture": "\(downloadURL!)"])
+                        UserDefaults.standard.set("\(downloadURL!)", forKey: "profilePicture")
+                        UserDefaults.standard.synchronize()
+                    }
+                })
+            }
+        }
     }
     
     //Creates an array of all users in Firebase
@@ -106,9 +140,33 @@ class RegisterViewController: UIViewController {
                 self.userArray.append(key)
             }
         })
-        
     }
     
     
 
+}
+
+extension UIImage {
+    func resizeWithPercent(percentage: CGFloat) -> UIImage? {
+        let imageView = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: size.width * percentage, height: size.height * percentage)))
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = self
+        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, scale)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        imageView.layer.render(in: context)
+        guard let result = UIGraphicsGetImageFromCurrentImageContext() else { return nil }
+        UIGraphicsEndImageContext()
+        return result
+    }
+    func resizeWithWidth(width: CGFloat) -> UIImage? {
+        let imageView = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: width, height: CGFloat(ceil(width/size.width * size.height)))))
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = self
+        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, scale)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        imageView.layer.render(in: context)
+        guard let result = UIGraphicsGetImageFromCurrentImageContext() else { return nil }
+        UIGraphicsEndImageContext()
+        return result
+    }
 }

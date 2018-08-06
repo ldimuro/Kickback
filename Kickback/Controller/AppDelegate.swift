@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseStorage
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,6 +27,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if(userLoginStatus)
         {
             print("USER IS LOGGED IN")
+            
+            //Load Profile Picture
+            let username = UserDefaults.standard.string(forKey: "username")
+            let filePath = "Profile Pictures/\(username!)-profile"
+            Storage.storage().reference().child(filePath).getData(maxSize: 10*1024*1024, completion: { (data, error) in
+                
+                let userPhoto = UIImage(data: data!)
+                UserDataArray.profilePicture = userPhoto
+            })
             
             let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main" , bundle: nil)
             

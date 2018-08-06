@@ -7,9 +7,11 @@
 //
 
 import Foundation
+import UIKit
 
 class SearchUser {
     var user : String = ""
-    var profilePic : String = ""
+//    var profilePic : String = ""
+    var profilePic : UIImage?
     var followed : Bool = false
 }
