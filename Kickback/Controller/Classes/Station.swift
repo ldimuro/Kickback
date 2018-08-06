@@ -12,5 +12,5 @@ class Station {
     var stationName : String = ""
     var user : String = ""
     var songs = [String]()
-    var followers = [String]()
+    var friends = [String]()
 }

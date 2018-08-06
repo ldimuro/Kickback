@@ -107,6 +107,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
         
+        UserDataArray.friends = userFriends
         print(userFriends)
         
         searchTable.reloadData()
@@ -169,9 +170,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let snap = child as! DataSnapshot
                 let key = snap.key
                 
-//                let snapshotValue = snap.value as! Dictionary<String,Any>
-//                let profilePic = snapshotValue["Profile Picture"] as! String
-                
                 let searchUserDB = SearchUser()
                 
                 let filePath = "Profile Pictures/\(key)-profile"
@@ -180,25 +178,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     
                     let userPhoto = UIImage(data: data!)
                     searchUserDB.profilePic = userPhoto
-//                    self.profilePicArray.append(userPhoto!)
                 })
-
-                
-//                searchUserDB.profilePic = profilePic
                 
                 if key != UserDefaults.standard.string(forKey: "username") {
                     searchUserDB.user = key
                 }
                 
                 self.userArray.append(searchUserDB)
-                
-//                let filePath = "Profile Pictures/\(key)-profile"
-//                // Assuming a < 10MB file, though you can change that
-//                Storage.storage().reference().child(filePath).getData(maxSize: 10*1024*1024, completion: { (data, error) in
-//
-//                    let userPhoto = UIImage(data: data!)
-//                    self.profilePicArray.append(userPhoto!)
-//                })
                 
             }
         })

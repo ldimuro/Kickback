@@ -1,16 +1,17 @@
 //
-//  SearchUser.swift
+//  AddFriend.swift
 //  Kickback
 //
-//  Created by Lou DiMuro on 7/26/18.
+//  Created by Lou DiMuro on 8/6/18.
 //  Copyright © 2018 Lou DiMuro. All rights reserved.
 //
 
 import Foundation
+
 import UIKit
 
-class SearchUser {
+class AddFriend {
     var user : String = ""
     var profilePic : UIImage?
-    var followed : Bool = false
+    var added : Bool = false
 }

@@ -47,6 +47,11 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
         
         cell.label.text = cellData[indexPath.row]
         
+        //Sets highlight color of cell (when selected)
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor(red: 1.0, green: 0.761, blue: 0.749, alpha: 1.0)
+        cell.selectedBackgroundView = bgColorView
+        
         return cell
         
     }
@@ -64,6 +69,14 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
             self.navigationItem.rightBarButtonItem?.isEnabled = false
         }
         return true
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 1 {
+            self.performSegue(withIdentifier: "goToAddFriends", sender: self)
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     @IBAction func createStationButton(_ sender: Any) {

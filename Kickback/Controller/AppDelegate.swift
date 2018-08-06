@@ -28,14 +28,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         {
             print("USER IS LOGGED IN")
             
-            //Load Profile Picture
             let username = UserDefaults.standard.string(forKey: "username")
+            
+            //Load Profile Picture
             let filePath = "Profile Pictures/\(username!)-profile"
             Storage.storage().reference().child(filePath).getData(maxSize: 10*1024*1024, completion: { (data, error) in
                 
                 let userPhoto = UIImage(data: data!)
                 UserDataArray.profilePicture = userPhoto
             })
+            
+            //Get user friends
+            let friendRef = Database.database().reference().child("Users").child(UserDefaults.standard.string(forKey: "username")!).child("Friends")
+            
+            friendRef.observeSingleEvent(of: .value) { (snapshot) in
+                for snap in snapshot.children {
+                    
+                    let friend = (snap as! DataSnapshot).value! as! String
+                    
+                    if friend != "N/A" {
+                        UserDataArray.friends.append(friend)
+                    }
+                }
+            }
             
             let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main" , bundle: nil)
             
