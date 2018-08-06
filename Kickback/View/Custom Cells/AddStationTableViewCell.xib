@@ -6,39 +6,55 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="addStationCell" id="KGk-i7-Jjw" customClass="AddStationTableViewCell" customModule="Kickback" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="addStationCell" rowHeight="70" id="KGk-i7-Jjw" customClass="AddStationTableViewCell" customModule="Kickback" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="341" height="89.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="341" height="69.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Playlists" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VnV-h6-YcI">
-                        <rect key="frame" x="16" y="25" width="325" height="39.5"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
+                        <rect key="frame" x="16" y="21" width="159" height="28"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="159" id="1MK-6L-Eli"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
                         <color key="textColor" red="0.92964053150000003" green="0.4597077966" blue="0.43527054790000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vc5-tD-CiN">
+                        <rect key="frame" x="294" y="25" width="39" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="39" id="RS0-XV-htM"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
+                        <color key="textColor" red="0.98823529409999999" green="0.46274509800000002" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="VnV-h6-YcI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="I6n-Fz-Csz"/>
-                    <constraint firstAttribute="bottom" secondItem="VnV-h6-YcI" secondAttribute="bottom" constant="25" id="KrU-3b-cKY"/>
-                    <constraint firstItem="VnV-h6-YcI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="25" id="j1F-0K-Cc1"/>
-                    <constraint firstAttribute="trailing" secondItem="VnV-h6-YcI" secondAttribute="trailing" id="nFZ-Xb-QHJ"/>
+                    <constraint firstItem="VnV-h6-YcI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="7Ib-Ou-7Uj"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="VnV-h6-YcI" secondAttribute="bottom" constant="10" id="DKJ-La-R60"/>
+                    <constraint firstItem="vc5-tD-CiN" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="GXm-a1-fs9"/>
+                    <constraint firstItem="VnV-h6-YcI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="GaD-Gz-jwH"/>
+                    <constraint firstItem="vc5-tD-CiN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="14" id="g7x-bB-DXd"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="vc5-tD-CiN" secondAttribute="bottom" constant="14" id="zKk-Ez-eg4"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="tintColor" red="0.92964053150000003" green="0.4597077966" blue="0.43527054790000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="countLabel" destination="vc5-tD-CiN" id="THe-Wu-P2Y"/>
                 <outlet property="label" destination="VnV-h6-YcI" id="6He-ST-pYS"/>
             </connections>
-            <point key="canvasLocation" x="33.5" y="76"/>
+            <point key="canvasLocation" x="33.5" y="66"/>
         </tableViewCell>
     </objects>
 </document>
