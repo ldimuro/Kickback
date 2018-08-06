@@ -429,21 +429,72 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="8hE-zB-iTE">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zRF-b1-8XR" userLabel="Container">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vpv-Jg-sY9" userLabel="Station Name Container">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="112"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter a station name" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="M8o-Yn-QYS">
+                                                        <rect key="frame" x="107" y="42" width="260" height="30"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <color key="tintColor" red="0.92964053150000003" green="0.4597077966" blue="0.43527054790000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <color key="textColor" red="0.92964053150000003" green="0.4597077966" blue="0.43527054790000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                                    </textField>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iPx-E0-PSC">
+                                                        <rect key="frame" x="20" y="22" width="70" height="70"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    </imageView>
+                                                </subviews>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="zRF-b1-8XR" firstAttribute="leading" secondItem="8hE-zB-iTE" secondAttribute="leading" id="N4A-Bm-IGU"/>
+                                    <constraint firstAttribute="trailing" secondItem="zRF-b1-8XR" secondAttribute="trailing" id="TtF-Ys-em3"/>
+                                    <constraint firstItem="zRF-b1-8XR" firstAttribute="top" secondItem="8hE-zB-iTE" secondAttribute="top" id="sw2-Pd-4JA"/>
+                                    <constraint firstAttribute="bottom" secondItem="zRF-b1-8XR" secondAttribute="bottom" id="vcn-1p-0qY"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="8hE-zB-iTE" secondAttribute="bottom" id="AhK-sZ-3Dn"/>
+                            <constraint firstItem="8hE-zB-iTE" firstAttribute="leading" secondItem="DkQ-5c-7DN" secondAttribute="leading" id="EOe-D3-27N"/>
+                            <constraint firstItem="8hE-zB-iTE" firstAttribute="top" secondItem="DkQ-5c-7DN" secondAttribute="top" id="bCf-8M-tar"/>
+                            <constraint firstAttribute="trailing" secondItem="8hE-zB-iTE" secondAttribute="trailing" id="dwF-Iy-db4"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="H2r-hx-6ZF"/>
                     </view>
                     <navigationItem key="navigationItem" id="pzq-t7-m4C">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="Fnm-2b-5eZ">
+                            <connections>
+                                <action selector="cancelButton:" destination="YlQ-wv-Z41" id="8rd-jB-D9p"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Create" id="iGP-lj-3go">
                             <connections>
                                 <action selector="createStationButton:" destination="YlQ-wv-Z41" id="LP9-OM-2UG"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="profilePicture" destination="iPx-E0-PSC" id="jqd-Ga-u6W"/>
+                        <outlet property="scrollView" destination="8hE-zB-iTE" id="OAZ-18-ToH"/>
+                        <outlet property="stationNameTextfield" destination="M8o-Yn-QYS" id="DzL-7s-SPg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B8w-6i-51K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3599" y="37"/>
+            <point key="canvasLocation" x="3597.5999999999999" y="36.945812807881772"/>
         </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="f6y-Z7-BKZ">
