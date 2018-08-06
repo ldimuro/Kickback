@@ -482,11 +482,42 @@
                         <outlet property="profilePicture" destination="iPx-E0-PSC" id="jqd-Ga-u6W"/>
                         <outlet property="stationNameTextfield" destination="M8o-Yn-QYS" id="DzL-7s-SPg"/>
                         <outlet property="tableView" destination="8Bq-7w-Ey1" id="jTF-yc-8GY"/>
+                        <segue destination="o9A-wf-gVl" kind="show" identifier="goToAddFriends" id="4TJ-os-lSy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B8w-6i-51K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3597.5999999999999" y="36.945812807881772"/>
+        </scene>
+        <!--Add Friends View Controller-->
+        <scene sceneID="z2t-wi-rzJ">
+            <objects>
+                <viewController id="o9A-wf-gVl" customClass="AddFriendsViewController" customModule="Kickback" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VMu-rT-mTQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="69" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1G8-Ip-ml8">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="1G8-Ip-ml8" firstAttribute="trailing" secondItem="2ft-7u-1tv" secondAttribute="trailing" id="5KT-KF-uNe"/>
+                            <constraint firstItem="1G8-Ip-ml8" firstAttribute="top" secondItem="2ft-7u-1tv" secondAttribute="top" id="VF3-hq-0qF"/>
+                            <constraint firstItem="1G8-Ip-ml8" firstAttribute="leading" secondItem="2ft-7u-1tv" secondAttribute="leading" id="jZX-om-NcS"/>
+                            <constraint firstAttribute="bottom" secondItem="1G8-Ip-ml8" secondAttribute="bottom" id="xeV-vf-s7Z"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="2ft-7u-1tv"/>
+                    </view>
+                    <connections>
+                        <outlet property="addFriendsTableView" destination="1G8-Ip-ml8" id="qiq-sf-ZaM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="esp-SB-gNf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4572" y="36.945812807881772"/>
         </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="f6y-Z7-BKZ">

@@ -43,8 +43,8 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "stationCell")! as! StationTableViewCell
         let station = stationArray[indexPath.row]
         
-        if station.followers.contains("None") {
-            station.followers.removeAll()
+        if station.friends.contains("None") {
+            station.friends.removeAll()
         }
 
         if station.songs.contains("None") {
@@ -53,7 +53,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         
         cell.stationName.text = station.stationName
         cell.songCount.text = "\(station.songs.count)"
-        cell.userCount.text = "\(station.followers.count)"
+        cell.userCount.text = "\(station.friends.count)"
         
         return cell
     }
@@ -127,13 +127,13 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             let station = snapshotValue["Station Name"]!
             let user = snapshotValue["User"]!
             let songs = snapshotValue["Songs"]!
-            let followers = snapshotValue["Followers"]!
+            let friends = snapshotValue["Friends"]!
             
             let dbStation = Station()
             dbStation.stationName = station as! String
             dbStation.user = user as! String
             dbStation.songs = songs as! [String]
-            dbStation.followers = followers as! [String]
+            dbStation.friends = friends as! [String]
             
             self.stationArray.append(dbStation)
             
@@ -142,6 +142,8 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             HUD.hide()
             
         }
+        
+        HUD.hide()
     }
     
     @IBAction func stationSwitch(_ sender: Any) {

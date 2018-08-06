@@ -82,6 +82,20 @@ class ViewController: UIViewController {
                 })
             }
         })
+        
+        //GET USER FRIENDS
+        let friendRef = Database.database().reference().child("Users").child(UserDefaults.standard.string(forKey: "username")!).child("Friends")
+        
+        friendRef.observeSingleEvent(of: .value) { (snapshot) in
+            for snap in snapshot.children {
+                
+                let friend = (snap as! DataSnapshot).value! as! String
+                
+                if friend != "N/A" {
+                    UserDataArray.friends.append(friend)
+                }
+            }
+        }
     }
 
 
@@ -89,5 +103,6 @@ class ViewController: UIViewController {
 
 struct UserDataArray {
     static var profilePicture : UIImage?
+    static var friends = [String]()
 }
 
