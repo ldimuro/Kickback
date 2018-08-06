@@ -11,6 +11,7 @@ import UIKit
 class AddStationTableViewCell: UITableViewCell {
 
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var countLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

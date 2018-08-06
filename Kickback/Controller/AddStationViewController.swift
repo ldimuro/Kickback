@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddStationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AddStationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
     @IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var stationNameTextfield: UITextField!
@@ -32,6 +32,10 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
         profilePicture.image = UserDataArray.profilePicture
         
         stationNameTextfield.becomeFirstResponder()
+        stationNameTextfield.delegate = self
+        if (stationNameTextfield.text?.isEmpty)!{
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+        }
         
         tableView.register(UINib(nibName: "AddStationTableViewCell", bundle: nil), forCellReuseIdentifier: "addStationCell")
         
@@ -50,6 +54,17 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cellData.count
     }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        
+        if !text.isEmpty{
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
+        } else {
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+        }
+        return true
+    }
 
     @IBAction func createStationButton(_ sender: Any) {
         
@@ -60,9 +75,30 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
     
     @IBAction func cancelButton(_ sender: Any) {
         
-        stationNameTextfield.resignFirstResponder()
-        dismiss(animated: true, completion: nil)
+        if stationNameTextfield.text != "" {
+            showAlert()
+        } else {
+            stationNameTextfield.resignFirstResponder()
+            dismiss(animated: true, completion: nil)
+        }
         
+    }
+    
+    func showAlert() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default , handler:{ (UIAlertAction)in
+            print("User clicked Cancel button")
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive , handler:{ (UIAlertAction)in
+            print("User clicked Delete button")
+            
+            self.stationNameTextfield.resignFirstResponder()
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
 
