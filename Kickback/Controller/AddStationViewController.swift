@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class AddStationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
@@ -19,6 +20,9 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        AddStationData.addedFriends.removeAll()
+        AddStationData.addedPlaylists.removeAll()
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -41,11 +45,30 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "addStationCell", for: indexPath) as! AddStationTableViewCell
         
         cell.label.text = cellData[indexPath.row]
+        
+        if indexPath.row == 0 {
+            if AddStationData.addedPlaylists.count != 0 {
+                cell.countLabel.text = "\(AddStationData.addedPlaylists.count)"
+            } else {
+                cell.countLabel.text = ""
+            }
+        }
+        else if indexPath.row == 1 {
+            if AddStationData.addedFriends.count != 0 {
+                cell.countLabel.text = "\(AddStationData.addedFriends.count)"
+            } else {
+                cell.countLabel.text = ""
+            }
+        }
         
         //Sets highlight color of cell (when selected)
         let bgColorView = UIView()
@@ -81,9 +104,45 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
 
     @IBAction func createStationButton(_ sender: Any) {
         
+        if AddStationData.addedFriends.count == 0 {
+            AddStationData.addedFriends.append("N/A")
+        }
+        
+        if AddStationData.addedPlaylists.count == 0 {
+            AddStationData.addedPlaylists.append("N/A")
+        }
+        
+        saveStation()
+        
+        print(AddStationData.addedFriends)
+        
         stationNameTextfield.resignFirstResponder()
         dismiss(animated: true, completion: nil)
         
+    }
+    
+    //Save station to Firebase
+    func saveStation() {
+        
+        let addStation = Database.database().reference().child("Stations")
+        let timestamp = "\(Date())"
+        
+        let postDictionary = ["Name": stationNameTextfield.text!,
+                              "User": UserDefaults.standard.string(forKey: "username")!,
+                              "Friends": AddStationData.addedFriends,
+                              "Playlists": AddStationData.addedPlaylists,
+                              "Timestamp": timestamp] as [String : Any]
+        
+        addStation.childByAutoId().setValue(postDictionary) {
+            (error, reference) in
+            
+            if(error != nil) {
+                print(error!)
+            }
+            else {
+                print("Station saved successfully")
+            }
+        }
     }
     
     @IBAction func cancelButton(_ sender: Any) {
@@ -115,4 +174,9 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
 
+}
+
+struct AddStationData {
+    static var addedFriends = [String]()
+    static var addedPlaylists = [String]()
 }

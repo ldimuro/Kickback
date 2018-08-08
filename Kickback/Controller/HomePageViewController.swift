@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import PKHUD
+import SwipeCellKit
 
 class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -21,6 +22,8 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("VIEW DID LOAD")
+        
         addNavBarImage()
         loadStations()
 
@@ -31,60 +34,78 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         stationTableView.register(UINib(nibName: "StationTableViewCell", bundle: nil), forCellReuseIdentifier: "stationCell")
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        filterData()
+    }
     
+    func filterData() {
+        
+        //Filters so only the current user's tasks are loaded
+        UserDataArray.stations = stationArray.filter {$0.user == UserDefaults.standard.string(forKey: "username")}
+        
+        //Orders the tasks based on when they were created
+        UserDataArray.stations = UserDataArray.stations.sorted(by: {$0.timestamp >= $1.timestamp})
+        
+        stationTableView.reloadData()
+    }
     
     //setup functions sideNave main TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stationArray.count
+        return UserDataArray.stations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "stationCell")! as! StationTableViewCell
-        let station = stationArray[indexPath.row]
+        let station = UserDataArray.stations[indexPath.row]
         
-        if station.friends.contains("None") {
-            station.friends.removeAll()
+        cell.delegate = self
+        
+        if station.friends.contains("N/A") && station.friends.count == 1 {
+            cell.userCount.text = "0"
+        } else {
+            cell.userCount.text = "\(station.friends.count)"
         }
 
-        if station.songs.contains("None") {
-            station.songs.removeAll()
+        if station.playlists.contains("N/A") && station.playlists.count == 1 {
+            cell.songCount.text = "0"
+        } else {
+            cell.songCount.text = "\(station.playlists.count)"
         }
         
         cell.stationName.text = station.stationName
-        cell.songCount.text = "\(station.songs.count)"
-        cell.userCount.text = "\(station.friends.count)"
+        cell.userLabel.text = station.user
         
         return cell
     }
     
-    @IBAction func addStation(_ sender: Any) {
-        
-        var textfield = UITextField()
-        
-        let alert = UIAlertController(title: "Create New Station", message: "", preferredStyle: .alert)
-        
-        let action = UIAlertAction(title: "Create", style: .default) { (action) in
-            
-            self.saveStation(station: textfield.text!)
-            
-            self.stationTableView.reloadData()
-        }
-        
-        let stop = UIAlertAction(title: "Cancel", style: .default) { (cancel) in
-            //Do nothing
-        }
-        
-        alert.addTextField { (alertTextField) in
-            alertTextField.placeholder = "Create new station"
-            textfield = alertTextField
-        }
-        
-        alert.addAction(action)
-        alert.addAction(stop)
-        
-        present(alert, animated: true, completion: nil)
-    }
+//    @IBAction func addStation(_ sender: Any) {
+//
+//        var textfield = UITextField()
+//
+//        let alert = UIAlertController(title: "Create New Station", message: "", preferredStyle: .alert)
+//        
+//        let action = UIAlertAction(title: "Create", style: .default) { (action) in
+//
+//            self.saveStation(station: textfield.text!)
+//
+//            self.stationTableView.reloadData()
+//        }
+//
+//        let stop = UIAlertAction(title: "Cancel", style: .default) { (cancel) in
+//            //Do nothing
+//        }
+//
+//        alert.addTextField { (alertTextField) in
+//            alertTextField.placeholder = "Create new station"
+//            textfield = alertTextField
+//        }
+//
+//        alert.addAction(action)
+//        alert.addAction(stop)
+//
+//        present(alert, animated: true, completion: nil)
+//    }
     
     //Save tasks to Firebase
     func saveStation(station: String) {
@@ -115,35 +136,35 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         
         HUD.show( .labeledProgress(title: "Loading Stations", subtitle: ""))
         
-        
         let stationDB = Database.database().reference().child("Stations")
-        
+
         stationDB.observe(.childAdded) { (snapshot) in
-            
-//            let key = snapshot.key
-            
+
+            let key = snapshot.key
+
             let snapshotValue = snapshot.value as! Dictionary<String,Any>
-            
-            let station = snapshotValue["Station Name"]!
-            let user = snapshotValue["User"]!
-            let songs = snapshotValue["Songs"]!
-            let friends = snapshotValue["Friends"]!
+
+            let station = snapshotValue["Name"]! as! String
+            let user = snapshotValue["User"]! as! String
+            let playlists = snapshotValue["Playlists"]! as! [String]
+            let friends = snapshotValue["Friends"]! as! [String]
+            let timestamp = snapshotValue["Timestamp"]! as! String
             
             let dbStation = Station()
-            dbStation.stationName = station as! String
-            dbStation.user = user as! String
-            dbStation.songs = songs as! [String]
-            dbStation.friends = friends as! [String]
+            dbStation.stationName = station
+            dbStation.user = user
+            dbStation.playlists = playlists
+            dbStation.friends = friends
+            dbStation.timestamp = timestamp
+            dbStation.key = key
             
             self.stationArray.append(dbStation)
             
-            self.stationTableView.reloadData()
+            self.filterData()
             
             HUD.hide()
-            
+
         }
-        
-        HUD.hide()
     }
     
     @IBAction func stationSwitch(_ sender: Any) {
@@ -177,4 +198,73 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
 
+}
+
+extension HomePageViewController: SwipeTableViewCellDelegate {
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        
+        guard orientation == .right else { return nil }
+        
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+            
+            // handle action by updating model with deletion
+            print("DELETED \(UserDataArray.stations[indexPath.row].stationName)")
+            
+            
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            
+            alert.addAction(UIAlertAction(title: "Delete \(UserDataArray.stations[indexPath.row].stationName)", style: .destructive , handler:{ (UIAlertAction)in
+                print("User clicked Delete button")
+                
+                Database.database().reference().child("Stations").child(UserDataArray.stations[indexPath.row].key).removeValue()
+                
+                //Remove from total station array
+                var x = 0
+                var found = false
+                while x < self.stationArray.count && !found{
+                    if self.stationArray[x].key == UserDataArray.stations[indexPath.row].key {
+                        print(self.stationArray[x].stationName)
+                        self.stationArray.remove(at: x)
+                        
+                        found = true
+                    }
+                    else {
+                        x += 1
+                    }
+                }
+                
+                UserDataArray.stations.remove(at: indexPath.row)
+
+                action.fulfill(with: .delete)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:{ (UIAlertAction)in
+                print("Cancelled")
+                action.fulfill(with: .reset)
+            }))
+            
+            self.present(alert, animated: true, completion: {
+                
+            })
+            
+            
+//            //hacky way to ensure the delete animation is smooth
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+//            })
+            
+        }
+        
+        // customize the action appearance
+        deleteAction.image = UIImage(named: "delete")
+        
+        return [deleteAction]
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        var options = SwipeTableOptions()
+        options.expansionStyle = .destructive(automaticallyDelete: false)
+        options.transitionStyle = .border
+        return options
+    }
 }
