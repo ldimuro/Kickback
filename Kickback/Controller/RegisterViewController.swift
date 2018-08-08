@@ -32,7 +32,7 @@ class RegisterViewController: UIViewController {
         
         signupButton.layer.cornerRadius = 25
 
-        // Do any additional setup after loading the view.
+        self.hideKeyboardWhenTappedAround()
     }
 
     @IBAction func signup(_ sender: Any) {

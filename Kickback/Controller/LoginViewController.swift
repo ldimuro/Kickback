@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         
         login.layer.cornerRadius = 25
         
-        // Do any additional setup after loading the view, typically from a nib.
+        self.hideKeyboardWhenTappedAround()
     }
 
     @IBAction func loginButton(_ sender: Any) {
@@ -109,5 +109,18 @@ struct UserDataArray {
     static var profilePicture : UIImage?
     static var friends = [String]()
     static var stations = [Station]()
+}
+
+//Adds the click away from keyboard functionality for use in any view controller with self.hideKeyboard when tapped around
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
 

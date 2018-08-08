@@ -60,6 +60,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         let station = UserDataArray.stations[indexPath.row]
         
         cell.delegate = self
+        cell.selectionStyle = .none
         
         if station.friends.contains("N/A") && station.friends.count == 1 {
             cell.userCount.text = "0"
