@@ -74,48 +74,40 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CAP-1v-HQ5" userLabel="Station ID Container">
-                        <rect key="frame" x="16" y="14" width="211" height="59"/>
+                        <rect key="frame" x="16" y="16" width="211" height="56"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Station Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gG2-t2-Y9o">
-                                <rect key="frame" x="0.0" y="0.0" width="211" height="37"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="211" id="Kgy-Zi-pJS"/>
-                                    <constraint firstAttribute="height" constant="37" id="mK9-p1-Mqi"/>
-                                </constraints>
+                                <rect key="frame" x="0.0" y="0.0" width="211" height="28.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lou_dimuro" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="riJ-VE-wOZ">
-                                <rect key="frame" x="0.0" y="37" width="211" height="22"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="211" id="VtC-Kz-Wa5"/>
-                                </constraints>
+                                <rect key="frame" x="0.0" y="36" width="211" height="14.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="12"/>
                                 <color key="textColor" red="0.98823529409999999" green="0.46274509800000002" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="gG2-t2-Y9o" secondAttribute="trailing" id="BQw-dm-1wU"/>
-                            <constraint firstItem="gG2-t2-Y9o" firstAttribute="top" secondItem="CAP-1v-HQ5" secondAttribute="top" id="CUw-Fg-b8a"/>
-                            <constraint firstItem="riJ-VE-wOZ" firstAttribute="leading" secondItem="CAP-1v-HQ5" secondAttribute="leading" id="D3C-vj-rQl"/>
-                            <constraint firstItem="riJ-VE-wOZ" firstAttribute="top" secondItem="gG2-t2-Y9o" secondAttribute="bottom" id="Kj3-3K-xe8"/>
-                            <constraint firstAttribute="trailing" secondItem="riJ-VE-wOZ" secondAttribute="trailing" id="Nwf-yR-N6r"/>
-                            <constraint firstAttribute="height" constant="59" id="XJ9-TR-7NR"/>
-                            <constraint firstAttribute="width" constant="211" id="iBa-Sx-VSR"/>
-                            <constraint firstAttribute="bottom" secondItem="riJ-VE-wOZ" secondAttribute="bottom" id="uj6-SP-suh"/>
-                            <constraint firstItem="gG2-t2-Y9o" firstAttribute="leading" secondItem="CAP-1v-HQ5" secondAttribute="leading" id="zPl-Cb-WFd"/>
+                            <constraint firstAttribute="trailing" secondItem="gG2-t2-Y9o" secondAttribute="trailing" id="9q6-Nl-ppN"/>
+                            <constraint firstAttribute="trailing" secondItem="riJ-VE-wOZ" secondAttribute="trailing" id="9t0-Ss-Xfo"/>
+                            <constraint firstItem="gG2-t2-Y9o" firstAttribute="leading" secondItem="CAP-1v-HQ5" secondAttribute="leading" id="Cmn-1x-YIv"/>
+                            <constraint firstItem="gG2-t2-Y9o" firstAttribute="top" secondItem="CAP-1v-HQ5" secondAttribute="top" id="DLO-Xy-gVO"/>
+                            <constraint firstItem="riJ-VE-wOZ" firstAttribute="top" secondItem="gG2-t2-Y9o" secondAttribute="bottom" constant="7.5" id="MeQ-hL-EIA"/>
+                            <constraint firstAttribute="bottom" secondItem="riJ-VE-wOZ" secondAttribute="bottom" constant="5.5" id="a0h-wM-ruh"/>
+                            <constraint firstItem="riJ-VE-wOZ" firstAttribute="leading" secondItem="CAP-1v-HQ5" secondAttribute="leading" id="cE4-vK-gk8"/>
                         </constraints>
                     </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="kv7-c7-AB3" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="50h-8w-n6o"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="CAP-1v-HQ5" secondAttribute="bottom" constant="4" id="ECq-L4-LPI"/>
-                    <constraint firstItem="CAP-1v-HQ5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="GtK-Pq-YMm"/>
                     <constraint firstItem="kv7-c7-AB3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="7" id="VXZ-tu-kTO"/>
+                    <constraint firstItem="CAP-1v-HQ5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="XsN-0i-7Uw"/>
                     <constraint firstItem="kv7-c7-AB3" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="ahx-N2-Nmm"/>
-                    <constraint firstItem="CAP-1v-HQ5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="dZU-Nu-Pzw"/>
+                    <constraint firstItem="kv7-c7-AB3" firstAttribute="leading" secondItem="CAP-1v-HQ5" secondAttribute="trailing" constant="45" id="jEK-hm-QbG"/>
+                    <constraint firstItem="CAP-1v-HQ5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="qqv-oz-5Gh"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="CAP-1v-HQ5" secondAttribute="bottom" constant="5" id="rkH-in-T0K"/>
                     <constraint firstAttribute="bottomMargin" secondItem="kv7-c7-AB3" secondAttribute="bottom" constant="7" id="sUF-kN-Dg6"/>
                 </constraints>
             </tableViewCellContentView>

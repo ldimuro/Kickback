@@ -212,7 +212,6 @@ extension HomePageViewController: SwipeTableViewCellDelegate {
             // handle action by updating model with deletion
             print("DELETED \(UserDataArray.stations[indexPath.row].stationName)")
             
-            
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             
             alert.addAction(UIAlertAction(title: "Delete \(UserDataArray.stations[indexPath.row].stationName)", style: .destructive , handler:{ (UIAlertAction)in

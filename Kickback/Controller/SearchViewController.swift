@@ -91,26 +91,58 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @objc func followedTapped(sender : UIButton) {
         
         if filteredArray[sender.tag].followed {
-            userFriends = userFriends.filter {$0 != filteredArray[sender.tag].user}
+            
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            
+            alert.addAction(UIAlertAction(title: "Unfollow \(filteredArray[sender.tag].user)", style: .destructive , handler:{ (UIAlertAction)in
+                print("User clicked Delete button")
+                self.userFriends = self.userFriends.filter {$0 != self.filteredArray[sender.tag].user}
+                
+                Database.database().reference().child("Users").child(UserDefaults.standard.string(forKey: "username")!).child("Friends").setValue(self.userFriends){
+                    (error, reference) in
+                    
+                    if(error != nil) {
+                        print(error!)
+                    }
+                    else {
+                        print("Friend Unfollowed!")
+                    }
+                }
+                
+                UserDataArray.friends = self.userFriends
+                print(self.userFriends)
+                
+                self.searchTable.reloadData()
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:{ (UIAlertAction)in
+                print("Cancelled")
+            }))
+            
+            self.present(alert, animated: true, completion: {
+                
+            })
+            
         } else {
             userFriends.append(filteredArray[sender.tag].user)
-        }
-        
-        Database.database().reference().child("Users").child(UserDefaults.standard.string(forKey: "username")!).child("Friends").setValue(userFriends){
-            (error, reference) in
             
-            if(error != nil) {
-                print(error!)
+            Database.database().reference().child("Users").child(UserDefaults.standard.string(forKey: "username")!).child("Friends").setValue(userFriends){
+                (error, reference) in
+                
+                if(error != nil) {
+                    print(error!)
+                }
+                else {
+                    print("Friend Added!")
+                }
             }
-            else {
-                print("Friend Added!")
-            }
+            
+            UserDataArray.friends = userFriends
+            print(userFriends)
+            
+            searchTable.reloadData()
         }
         
-        UserDataArray.friends = userFriends
-        print(userFriends)
-        
-        searchTable.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
