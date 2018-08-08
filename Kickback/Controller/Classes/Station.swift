@@ -11,6 +11,8 @@ import Foundation
 class Station {
     var stationName : String = ""
     var user : String = ""
-    var songs = [String]()
+    var playlists = [String]()
     var friends = [String]()
+    var timestamp : String = ""
+    var key : String = ""
 }

@@ -111,9 +111,10 @@ class AddFriendsViewController: UIViewController, UITableViewDelegate, UITableVi
                         
                         self.friendArray = self.friendArray.sorted{$0.user < $1.user}
                         
-                        let range = NSMakeRange(0, self.addFriendsTableView.numberOfSections)
-                        let sections = NSIndexSet(indexesIn: range)
-                        self.addFriendsTableView.reloadSections(sections as IndexSet, with: .automatic)
+//                        let range = NSMakeRange(0, self.addFriendsTableView.numberOfSections)
+//                        let sections = NSIndexSet(indexesIn: range)
+//                        self.addFriendsTableView.reloadSections(sections as IndexSet, with: .automatic)
+                        self.addFriendsTableView.reloadData()
                         
                     })
                 }

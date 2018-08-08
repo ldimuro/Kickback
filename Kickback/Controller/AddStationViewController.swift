@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class AddStationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
@@ -21,6 +22,7 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
         super.viewDidLoad()
         
         AddStationData.addedFriends.removeAll()
+        AddStationData.addedPlaylists.removeAll()
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -68,8 +70,6 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
             }
         }
         
-        
-        
         //Sets highlight color of cell (when selected)
         let bgColorView = UIView()
         bgColorView.backgroundColor = UIColor(red: 1.0, green: 0.761, blue: 0.749, alpha: 1.0)
@@ -104,9 +104,45 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
 
     @IBAction func createStationButton(_ sender: Any) {
         
+        if AddStationData.addedFriends.count == 0 {
+            AddStationData.addedFriends.append("N/A")
+        }
+        
+        if AddStationData.addedPlaylists.count == 0 {
+            AddStationData.addedPlaylists.append("N/A")
+        }
+        
+        saveStation()
+        
+        print(AddStationData.addedFriends)
+        
         stationNameTextfield.resignFirstResponder()
         dismiss(animated: true, completion: nil)
         
+    }
+    
+    //Save station to Firebase
+    func saveStation() {
+        
+        let addStation = Database.database().reference().child("Stations")
+        let timestamp = "\(Date())"
+        
+        let postDictionary = ["Name": stationNameTextfield.text!,
+                              "User": UserDefaults.standard.string(forKey: "username")!,
+                              "Friends": AddStationData.addedFriends,
+                              "Playlists": AddStationData.addedPlaylists,
+                              "Timestamp": timestamp] as [String : Any]
+        
+        addStation.childByAutoId().setValue(postDictionary) {
+            (error, reference) in
+            
+            if(error != nil) {
+                print(error!)
+            }
+            else {
+                print("Station saved successfully")
+            }
+        }
     }
     
     @IBAction func cancelButton(_ sender: Any) {

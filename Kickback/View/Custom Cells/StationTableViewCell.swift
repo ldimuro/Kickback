@@ -10,12 +10,14 @@
 //  Music-note Icon made by Smashicon [https://www.flaticon.com/authors/smashicons] from www.flaticon.com
 
 import UIKit
+import SwipeCellKit
 
-class StationTableViewCell: UITableViewCell {
+class StationTableViewCell: SwipeTableViewCell {
 
     @IBOutlet weak var stationName: UILabel!
     @IBOutlet weak var songCount: UILabel!
     @IBOutlet weak var userCount: UILabel!
+    @IBOutlet weak var userLabel: UILabel!
     
     
     override func awakeFromNib() {

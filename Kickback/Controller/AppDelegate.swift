@@ -22,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
         //Checks whether or not the user is signed in
+//        UserDefaults.standard.set(false, forKey: "isUserLoggedIn")
+        
         let userLoginStatus = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
         
         if(userLoginStatus)

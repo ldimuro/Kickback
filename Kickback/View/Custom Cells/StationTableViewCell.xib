@@ -73,24 +73,50 @@
                             <constraint firstItem="01H-Tp-m0G" firstAttribute="leading" secondItem="kv7-c7-AB3" secondAttribute="leading" id="yfz-GO-Cfq"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Station Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="gG2-t2-Y9o">
-                        <rect key="frame" x="16" y="19" width="219" height="50"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CAP-1v-HQ5" userLabel="Station ID Container">
+                        <rect key="frame" x="16" y="14" width="211" height="59"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Station Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gG2-t2-Y9o">
+                                <rect key="frame" x="0.0" y="0.0" width="211" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="211" id="Kgy-Zi-pJS"/>
+                                    <constraint firstAttribute="height" constant="37" id="mK9-p1-Mqi"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lou_dimuro" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="riJ-VE-wOZ">
+                                <rect key="frame" x="0.0" y="37" width="211" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="211" id="VtC-Kz-Wa5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="12"/>
+                                <color key="textColor" red="0.98823529409999999" green="0.46274509800000002" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <constraints>
-                            <constraint firstAttribute="width" constant="219" id="Bxt-d4-uXQ"/>
+                            <constraint firstAttribute="trailing" secondItem="gG2-t2-Y9o" secondAttribute="trailing" id="BQw-dm-1wU"/>
+                            <constraint firstItem="gG2-t2-Y9o" firstAttribute="top" secondItem="CAP-1v-HQ5" secondAttribute="top" id="CUw-Fg-b8a"/>
+                            <constraint firstItem="riJ-VE-wOZ" firstAttribute="leading" secondItem="CAP-1v-HQ5" secondAttribute="leading" id="D3C-vj-rQl"/>
+                            <constraint firstItem="riJ-VE-wOZ" firstAttribute="top" secondItem="gG2-t2-Y9o" secondAttribute="bottom" id="Kj3-3K-xe8"/>
+                            <constraint firstAttribute="trailing" secondItem="riJ-VE-wOZ" secondAttribute="trailing" id="Nwf-yR-N6r"/>
+                            <constraint firstAttribute="height" constant="59" id="XJ9-TR-7NR"/>
+                            <constraint firstAttribute="width" constant="211" id="iBa-Sx-VSR"/>
+                            <constraint firstAttribute="bottom" secondItem="riJ-VE-wOZ" secondAttribute="bottom" id="uj6-SP-suh"/>
+                            <constraint firstItem="gG2-t2-Y9o" firstAttribute="leading" secondItem="CAP-1v-HQ5" secondAttribute="leading" id="zPl-Cb-WFd"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="30"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="kv7-c7-AB3" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="50h-8w-n6o"/>
-                    <constraint firstItem="gG2-t2-Y9o" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="SEM-OA-YCf"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="CAP-1v-HQ5" secondAttribute="bottom" constant="4" id="ECq-L4-LPI"/>
+                    <constraint firstItem="CAP-1v-HQ5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="GtK-Pq-YMm"/>
                     <constraint firstItem="kv7-c7-AB3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="7" id="VXZ-tu-kTO"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="gG2-t2-Y9o" secondAttribute="bottom" constant="8" id="Y8f-0o-b2X"/>
                     <constraint firstItem="kv7-c7-AB3" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="ahx-N2-Nmm"/>
+                    <constraint firstItem="CAP-1v-HQ5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="dZU-Nu-Pzw"/>
                     <constraint firstAttribute="bottomMargin" secondItem="kv7-c7-AB3" secondAttribute="bottom" constant="7" id="sUF-kN-Dg6"/>
-                    <constraint firstItem="gG2-t2-Y9o" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="skh-Xw-pea"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -98,6 +124,7 @@
                 <outlet property="songCount" destination="01H-Tp-m0G" id="gq4-1W-g0r"/>
                 <outlet property="stationName" destination="gG2-t2-Y9o" id="1T3-1F-t71"/>
                 <outlet property="userCount" destination="Gzl-S8-gLd" id="MpX-dn-lAQ"/>
+                <outlet property="userLabel" destination="riJ-VE-wOZ" id="O9v-8Y-myt"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="76"/>
         </tableViewCell>
