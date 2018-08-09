@@ -15,6 +15,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
 
     @IBOutlet weak var stationTableView: UITableView!
     @IBOutlet weak var stationSwitcher: UISegmentedControl!
+    @IBOutlet weak var notificationBarButton: UIBarButtonItem!
     
     var stationArray = [Station]()
     let user = Auth.auth().currentUser
@@ -36,6 +37,10 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidAppear(_ animated: Bool) {
         filterData()
+        
+        let rightBarButton = self.navigationItem.rightBarButtonItem
+        rightBarButton?.removeBadge()
+        getNumOfNotifications()
     }
     
     func filterData() {
@@ -80,35 +85,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     
-//    @IBAction func addStation(_ sender: Any) {
-//
-//        var textfield = UITextField()
-//
-//        let alert = UIAlertController(title: "Create New Station", message: "", preferredStyle: .alert)
-//        
-//        let action = UIAlertAction(title: "Create", style: .default) { (action) in
-//
-//            self.saveStation(station: textfield.text!)
-//
-//            self.stationTableView.reloadData()
-//        }
-//
-//        let stop = UIAlertAction(title: "Cancel", style: .default) { (cancel) in
-//            //Do nothing
-//        }
-//
-//        alert.addTextField { (alertTextField) in
-//            alertTextField.placeholder = "Create new station"
-//            textfield = alertTextField
-//        }
-//
-//        alert.addAction(action)
-//        alert.addAction(stop)
-//
-//        present(alert, animated: true, completion: nil)
-//    }
-    
-    //Save tasks to Firebase
+    //Save station to Firebase
     func saveStation(station: String) {
         
         let addStation = Database.database().reference().child("Stations")
@@ -132,7 +109,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    //Load tasks from Firebase
+    //Load stations from Firebase
     func loadStations() {
         
         HUD.show( .labeledProgress(title: "Loading Stations", subtitle: ""))
@@ -168,12 +145,29 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    func getNumOfNotifications() {
+        let ref = Database.database().reference().child("Unread Notifications").queryOrdered(byChild: "Recipient").queryEqual(toValue: UserDefaults.standard.string(forKey: "username"))
+        
+        var count = 0
+        
+        ref.observe(.childAdded) { (snapshot) in
+            
+            count += 1
+            
+            let rightBarButton = self.navigationItem.rightBarButtonItem
+            rightBarButton?.addBadge(text: "\(count)")
+
+        }
+        
+    }
+    
     @IBAction func stationSwitch(_ sender: Any) {
         switch stationSwitcher.selectedSegmentIndex {
         case 0: //MY STATIONS
             print("My Stations")
         case 1: //SHARED WITH ME
             print("Shared With Me")
+            getNumOfNotifications()
         default:
             break
         }

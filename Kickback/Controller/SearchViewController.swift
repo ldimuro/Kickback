@@ -94,7 +94,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             
-            alert.addAction(UIAlertAction(title: "Unfollow \(filteredArray[sender.tag].user)", style: .destructive , handler:{ (UIAlertAction)in
+            alert.addAction(UIAlertAction(title: "Unfriend \(filteredArray[sender.tag].user)", style: .destructive , handler:{ (UIAlertAction)in
                 print("User clicked Delete button")
                 self.userFriends = self.userFriends.filter {$0 != self.filteredArray[sender.tag].user}
                 
@@ -133,7 +133,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     print(error!)
                 }
                 else {
-                    print("Friend Added!")
+                    print("\(self.filteredArray[sender.tag].user) Added!")
+                    self.saveNotification(recipient: self.filteredArray[sender.tag].user)
                 }
             }
             
@@ -144,6 +145,29 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
     }
+    
+    //Save notification to "Unread Notifications" in Firebase
+    func saveNotification(recipient: String) {
+
+        let addNotification = Database.database().reference().child("Unread Notifications")
+
+        let postDictionary = ["Message": "\(UserDefaults.standard.string(forKey: "username")!) added you",
+                              "User": UserDefaults.standard.string(forKey: "username")!,
+                              "Recipient": recipient,
+                              "Timestamp": "\(Date())"] as [String : Any]
+
+        addNotification.childByAutoId().setValue(postDictionary) {
+            (error, reference) in
+
+            if(error != nil) {
+                print(error!)
+            }
+            else {
+                print("Notification sent successfully")
+            }
+        }
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredArray.count
