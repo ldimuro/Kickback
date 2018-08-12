@@ -124,7 +124,7 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
     //Save station to Firebase
     func saveStation() {
         
-        let addStation = Database.database().reference().child("Stations")
+        let addStation = Database.database().reference().child("Stations").child("\(Auth.auth().currentUser!.uid)")
         let timestamp = "\(Date())"
         
         let postDictionary = ["Name": stationNameTextfield.text!,
@@ -159,7 +159,7 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
     func showAlert() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default , handler:{ (UIAlertAction)in
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel , handler:{ (UIAlertAction)in
             print("User clicked Cancel button")
         }))
         
