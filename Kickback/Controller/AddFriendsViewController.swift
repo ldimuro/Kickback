@@ -31,7 +31,6 @@ class AddFriendsViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        print("FRIENDS: \(AddStationData.addedFriends)")
         arrayToSend = AddStationData.addedFriends
     }
     

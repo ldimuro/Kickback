@@ -44,7 +44,7 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
     //Searches through "Unread Notifications" for current user
     func checkNotifications() {
         
-        let ref = Database.database().reference().child("Unread Notifications").queryOrdered(byChild: "Recipient").queryEqual(toValue: UserDefaults.standard.string(forKey: "username"))
+        let ref = Database.database().reference().child("Unread Notifications").child(UserDefaults.standard.string(forKey: "username")!)
         
         ref.observeSingleEvent(of: .value, with:{ (snapshot: DataSnapshot) in
             
@@ -88,7 +88,7 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
             }
             else {
                 print("Refreshed")
-                Database.database().reference().child("Unread Notifications").child(key).removeValue()
+                Database.database().reference().child("Unread Notifications").child(UserDefaults.standard.string(forKey: "username")!).child(key).removeValue()
             }
         }
     }

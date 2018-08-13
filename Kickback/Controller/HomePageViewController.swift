@@ -37,9 +37,9 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidAppear(_ animated: Bool) {
 //        filterData()
-        
         let rightBarButton = self.navigationItem.rightBarButtonItem
         rightBarButton?.removeBadge()
+        
         getNumOfNotifications()
     }
     
@@ -87,29 +87,6 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     
-    //Save station to Firebase
-//    func saveStation(station: String) {
-//
-//        let addStation = Database.database().reference().child("Stations")
-//        let station = station
-//        let email = user!.email
-//        
-//        let postDictionary = ["Station Name": station,
-//                              "User": email!,
-//                              "Songs": ["None"],
-//                              "Followers": ["None"]] as [String : Any]
-//
-//        addStation.childByAutoId().setValue(postDictionary) {
-//            (error, reference) in
-//
-//            if(error != nil) {
-//                print(error!)
-//            }
-//            else {
-//                print("Station saved successfully")
-//            }
-//        }
-//    }
     
     //Load stations from Firebase
     func loadStations() {
@@ -151,7 +128,10 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getNumOfNotifications() {
-        let ref = Database.database().reference().child("Unread Notifications").queryOrdered(byChild: "Recipient").queryEqual(toValue: UserDefaults.standard.string(forKey: "username"))
+        let rightBarButton = self.navigationItem.rightBarButtonItem
+        rightBarButton?.removeBadge()
+        
+        let ref = Database.database().reference().child("Unread Notifications").child(UserDefaults.standard.string(forKey: "username")!)
         
         var count = 0
         
@@ -161,7 +141,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             
             let rightBarButton = self.navigationItem.rightBarButtonItem
             rightBarButton?.addBadge(text: "\(count)")
-
+            
         }
         
     }
