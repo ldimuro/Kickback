@@ -149,14 +149,16 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //Save notification to "Unread Notifications" in Firebase
     func saveNotification(recipient: String) {
 
-        let addNotification = Database.database().reference().child("Unread Notifications")
-
-        let postDictionary = ["Message": "\(UserDefaults.standard.string(forKey: "username")!) added you",
+        let postDictionary = ["Message": "\(UserDefaults.standard.string(forKey: "username")!) friended you",
                               "User": UserDefaults.standard.string(forKey: "username")!,
                               "Recipient": recipient,
                               "Timestamp": "\(Date())"] as [String : Any]
+        
+        let addNotification = Database.database().reference().child("Unread Notifications").child("\(recipient)")
+        
+        let autoID = addNotification.childByAutoId()
 
-        addNotification.childByAutoId().setValue(postDictionary) {
+        autoID.setValue(postDictionary) {
             (error, reference) in
 
             if(error != nil) {
@@ -164,6 +166,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
             else {
                 print("Notification sent successfully")
+                print(autoID.key)
             }
         }
     }

@@ -51,6 +51,8 @@ class ProfilePageViewController: UIViewController, UIImagePickerControllerDelega
         
         try! Auth.auth().signOut()
         
+        UserDataArray.friends.removeAll()
+        
         //Logs user out on phone
         UserDefaults.standard.set(false, forKey: "isUserLoggedIn")
         UserDefaults.standard.synchronize()

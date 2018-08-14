@@ -15,5 +15,6 @@ pod 'Firebase/Core'
 pod 'Firebase/Storage'
 pod 'PKHUD'
 pod 'SwipeCellKit'
+pod 'CRRefresh'
 
 end

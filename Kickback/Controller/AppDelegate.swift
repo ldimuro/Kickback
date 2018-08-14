@@ -26,6 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let userLoginStatus = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
         
+//        UserDataArray.stations.removeAll()
+//        UserDataArray.friends.removeAll()
+
+        
         if(userLoginStatus)
         {
             print("USER IS LOGGED IN")

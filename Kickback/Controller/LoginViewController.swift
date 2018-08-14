@@ -108,7 +108,7 @@ class ViewController: UIViewController {
 struct UserDataArray {
     static var profilePicture : UIImage?
     static var friends = [String]()
-    static var stations = [Station]()
+//    static var stations = [Station]()
 }
 
 //Adds the click away from keyboard functionality for use in any view controller with self.hideKeyboard when tapped around

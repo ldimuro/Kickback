@@ -27,6 +27,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         
         addNavBarImage()
         loadStations()
+//        getNumOfNotifications()
 
         stationTableView.delegate = self
         stationTableView.dataSource = self
@@ -36,33 +37,53 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        filterData()
+//        filterData()
         
+        addRedBubble()
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
         let rightBarButton = self.navigationItem.rightBarButtonItem
         rightBarButton?.removeBadge()
-        getNumOfNotifications()
+    }
+    
+    func addRedBubble() {
+        let rightBarButton = self.navigationItem.rightBarButtonItem
+        
+        Database.database().reference().child("Unread Notifications").child(UserDefaults.standard.string(forKey: "username")!).observeSingleEvent(of: .value) { (snapshot) in
+            if snapshot.hasChildren() {
+                rightBarButton?.addBadge(text: "")
+                print("HAS NOTIFICATIONS")
+            } else {
+                rightBarButton?.removeBadge()
+                print("DOES NOT HAVE NOTIFICATIONS")
+            }
+        }
     }
     
     func filterData() {
         
         //Filters so only the current user's tasks are loaded
-        UserDataArray.stations = stationArray.filter {$0.user == UserDefaults.standard.string(forKey: "username")}
+//        UserDataArray.stations = stationArray.filter {$0.user == UserDefaults.standard.string(forKey: "username")}
         
         //Orders the tasks based on when they were created
-        UserDataArray.stations = UserDataArray.stations.sorted(by: {$0.timestamp >= $1.timestamp})
+//        UserDataArray.stations = UserDataArray.stations.sorted(by: {$0.timestamp >= $1.timestamp})
         
         stationTableView.reloadData()
     }
     
     //setup functions sideNave main TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return UserDataArray.stations.count
+//        return UserDataArray.stations.count
+        return stationArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "stationCell")! as! StationTableViewCell
-        let station = UserDataArray.stations[indexPath.row]
+//        let station = UserDataArray.stations[indexPath.row]
+        let station = stationArray[indexPath.row]
         
         cell.delegate = self
         cell.selectionStyle = .none
@@ -85,39 +106,16 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     
-    //Save station to Firebase
-    func saveStation(station: String) {
-        
-        let addStation = Database.database().reference().child("Stations")
-        let station = station
-        let email = user!.email
-        
-        let postDictionary = ["Station Name": station,
-                              "User": email!,
-                              "Songs": ["None"],
-                              "Followers": ["None"]] as [String : Any]
-        
-        addStation.childByAutoId().setValue(postDictionary) {
-            (error, reference) in
-            
-            if(error != nil) {
-                print(error!)
-            }
-            else {
-                print("Station saved successfully")
-            }
-        }
-    }
     
     //Load stations from Firebase
     func loadStations() {
         
-        HUD.show( .labeledProgress(title: "Loading Stations", subtitle: ""))
+//        HUD.show( .labeledProgress(title: "Loading Stations", subtitle: ""))
         
-        let stationDB = Database.database().reference().child("Stations")
+        let stationDB = Database.database().reference().child("Stations").child("\(Auth.auth().currentUser!.uid)")
 
         stationDB.observe(.childAdded) { (snapshot) in
-
+            
             let key = snapshot.key
 
             let snapshotValue = snapshot.value as! Dictionary<String,Any>
@@ -138,15 +136,19 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             
             self.stationArray.append(dbStation)
             
-            self.filterData()
+            self.stationArray = self.stationArray.sorted(by: {$0.timestamp >= $1.timestamp})
             
-            HUD.hide()
+            self.stationTableView.reloadData()
+            
+//            HUD.hide()
 
         }
+        
     }
     
     func getNumOfNotifications() {
-        let ref = Database.database().reference().child("Unread Notifications").queryOrdered(byChild: "Recipient").queryEqual(toValue: UserDefaults.standard.string(forKey: "username"))
+        
+        let ref = Database.database().reference().child("Unread Notifications").child(UserDefaults.standard.string(forKey: "username")!)
         
         var count = 0
         
@@ -154,9 +156,14 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             
             count += 1
             
-            let rightBarButton = self.navigationItem.rightBarButtonItem
-            rightBarButton?.addBadge(text: "\(count)")
-
+            print("NOTIFICATION RECEIVED")
+            
+//            let rightBarButton = self.navigationItem.rightBarButtonItem
+//            rightBarButton?.addBadge(text: "\(count)")
+//            rightBarButton?.addBadge(text: "")
+            
+//            self.addRedBubble()
+            
         }
         
     }
@@ -204,31 +211,16 @@ extension HomePageViewController: SwipeTableViewCellDelegate {
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
             
             // handle action by updating model with deletion
-            print("DELETED \(UserDataArray.stations[indexPath.row].stationName)")
+            print("DELETED \(self.stationArray[indexPath.row].stationName)")
             
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             
-            alert.addAction(UIAlertAction(title: "Delete \(UserDataArray.stations[indexPath.row].stationName)", style: .destructive , handler:{ (UIAlertAction)in
+            alert.addAction(UIAlertAction(title: "Delete \(self.stationArray[indexPath.row].stationName)", style: .destructive , handler:{ (UIAlertAction)in
                 print("User clicked Delete button")
                 
-                Database.database().reference().child("Stations").child(UserDataArray.stations[indexPath.row].key).removeValue()
+                Database.database().reference().child("Stations").child("\(Auth.auth().currentUser!.uid)").child(self.stationArray[indexPath.row].key).removeValue()
                 
-                //Remove from total station array
-                var x = 0
-                var found = false
-                while x < self.stationArray.count && !found{
-                    if self.stationArray[x].key == UserDataArray.stations[indexPath.row].key {
-                        print(self.stationArray[x].stationName)
-                        self.stationArray.remove(at: x)
-                        
-                        found = true
-                    }
-                    else {
-                        x += 1
-                    }
-                }
-                
-                UserDataArray.stations.remove(at: indexPath.row)
+                self.stationArray.remove(at: indexPath.row)
 
                 action.fulfill(with: .delete)
             }))

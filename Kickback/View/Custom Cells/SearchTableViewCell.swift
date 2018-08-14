@@ -20,6 +20,7 @@ class SearchTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
+        //Make profile picture a circle
         profilePicture.layer.masksToBounds = false
         profilePicture.layer.borderColor = UIColor.black.cgColor
         profilePicture.layer.cornerRadius = profilePicture.frame.height/2

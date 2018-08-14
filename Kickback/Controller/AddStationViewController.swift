@@ -113,6 +113,7 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         
         saveStation()
+        saveNotification()
         
         print(AddStationData.addedFriends)
         
@@ -124,7 +125,7 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
     //Save station to Firebase
     func saveStation() {
         
-        let addStation = Database.database().reference().child("Stations")
+        let addStation = Database.database().reference().child("Stations").child("\(Auth.auth().currentUser!.uid)")
         let timestamp = "\(Date())"
         
         let postDictionary = ["Name": stationNameTextfield.text!,
@@ -145,6 +146,36 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
+    //Save notification to "Unread Notifications" in Firebase
+    func saveNotification() {
+        
+        for x in 0..<AddStationData.addedFriends.count {
+            
+            let postDictionary = ["Message": "\(UserDefaults.standard.string(forKey: "username")!) added you to \"\(stationNameTextfield.text!)\"",
+                                  "User": UserDefaults.standard.string(forKey: "username")!,
+                                  "Recipient": AddStationData.addedFriends[x],
+                                  "Timestamp": "\(Date())"] as [String : Any]
+            
+            let addNotification = Database.database().reference().child("Unread Notifications").child("\(AddStationData.addedFriends[x])")
+            
+            let autoID = addNotification.childByAutoId()
+            
+            autoID.setValue(postDictionary) {
+                (error, reference) in
+                
+                if(error != nil) {
+                    print(error!)
+                }
+                else {
+                    print("Notification sent successfully")
+                    print(autoID.key)
+                }
+            }
+        }
+        
+        
+    }
+    
     @IBAction func cancelButton(_ sender: Any) {
         
         if stationNameTextfield.text != "" {
@@ -159,7 +190,7 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
     func showAlert() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default , handler:{ (UIAlertAction)in
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel , handler:{ (UIAlertAction)in
             print("User clicked Cancel button")
         }))
         
