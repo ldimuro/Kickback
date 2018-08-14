@@ -27,6 +27,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         
         addNavBarImage()
         loadStations()
+//        getNumOfNotifications()
 
         stationTableView.delegate = self
         stationTableView.dataSource = self
@@ -37,10 +38,28 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidAppear(_ animated: Bool) {
 //        filterData()
+        
+        addRedBubble()
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
         let rightBarButton = self.navigationItem.rightBarButtonItem
         rightBarButton?.removeBadge()
+    }
+    
+    func addRedBubble() {
+        let rightBarButton = self.navigationItem.rightBarButtonItem
         
-        getNumOfNotifications()
+        Database.database().reference().child("Unread Notifications").child(UserDefaults.standard.string(forKey: "username")!).observeSingleEvent(of: .value) { (snapshot) in
+            if snapshot.hasChildren() {
+                rightBarButton?.addBadge(text: "")
+                print("HAS NOTIFICATIONS")
+            } else {
+                rightBarButton?.removeBadge()
+                print("DOES NOT HAVE NOTIFICATIONS")
+            }
+        }
     }
     
     func filterData() {
@@ -128,8 +147,6 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getNumOfNotifications() {
-        let rightBarButton = self.navigationItem.rightBarButtonItem
-        rightBarButton?.removeBadge()
         
         let ref = Database.database().reference().child("Unread Notifications").child(UserDefaults.standard.string(forKey: "username")!)
         
@@ -139,8 +156,13 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             
             count += 1
             
-            let rightBarButton = self.navigationItem.rightBarButtonItem
-            rightBarButton?.addBadge(text: "\(count)")
+            print("NOTIFICATION RECEIVED")
+            
+//            let rightBarButton = self.navigationItem.rightBarButtonItem
+//            rightBarButton?.addBadge(text: "\(count)")
+//            rightBarButton?.addBadge(text: "")
+            
+//            self.addRedBubble()
             
         }
         

@@ -13,5 +13,6 @@ class Notification {
     var user : String = ""
     var recipient : String = ""
     var timestamp : String = ""
+    var key : String = ""
     var read : Bool = false
 }
