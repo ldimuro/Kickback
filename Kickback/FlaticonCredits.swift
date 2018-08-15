@@ -16,4 +16,8 @@
 //  friends icon made by Freepik [https://www.freepik.com/] from www.flaticon.com
 //  empty-button made by Daniel Bruce [https://www.flaticon.com/authors/daniel-bruce] from www.flaticon.com
 //  checked-button made by Google [https://www.flaticon.com/authors/google] from www.flaticon.com
+//  play button made by Chanut [https://www.flaticon.com/authors/chanut] from www.flaticon.com
+//  pause button made by Chanut [https://www.flaticon.com/authors/chanut] from www.flaticon.com
+//  forward button made by Chanut [https://www.flaticon.com/authors/chanut] from www.flaticon.com
+//  backward button made by Chanut [https://www.flaticon.com/authors/chanut] from www.flaticon.com
 
