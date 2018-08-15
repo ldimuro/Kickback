@@ -104,6 +104,8 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
 
     @IBAction func createStationButton(_ sender: Any) {
         
+        AddStationData.addedFriends.append(UserDefaults.standard.string(forKey: "username")!)
+        
         if AddStationData.addedFriends.count == 0 {
             AddStationData.addedFriends.append("N/A")
         }
@@ -130,6 +132,7 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
         
         let postDictionary = ["Name": stationNameTextfield.text!,
                               "User": UserDefaults.standard.string(forKey: "username")!,
+                              "Owner": UserDefaults.standard.string(forKey: "username")!,
                               "Friends": AddStationData.addedFriends,
                               "Playlists": AddStationData.addedPlaylists,
                               "Timestamp": timestamp] as [String : Any]
@@ -142,6 +145,7 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             else {
                 print("Station saved successfully")
+                self.saveSharedStations(owner: UserDefaults.standard.string(forKey: "username")!)
             }
         }
     }
@@ -172,6 +176,45 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
                 }
             }
         }
+    }
+    
+    //Save shared station to "Shared Stations" in Firebase
+    func saveSharedStations(owner: String) {
+        
+        let addSharedStation = Database.database().reference().child("Shared Stations")
+        let timestamp = "\(Date())"
+        
+        for x in 0..<AddStationData.addedFriends.count {
+            
+            var friendArray = AddStationData.addedFriends.filter {$0 != AddStationData.addedFriends[x]}
+            friendArray.append(owner)
+            
+            if friendArray.isEmpty {
+                friendArray.append("N/A")
+            }
+            
+            let postDictionary = ["Name": stationNameTextfield.text!,
+                                  "User": AddStationData.addedFriends[x],
+                                  "Owner": owner,
+                                  "Friends": friendArray,
+                                  "Playlists": AddStationData.addedPlaylists,
+                                  "Timestamp": timestamp] as [String : Any]
+            
+            let autoID = addSharedStation.childByAutoId()
+            
+            autoID.setValue(postDictionary) {
+                (error, reference) in
+                
+                if(error != nil) {
+                    print(error!)
+                }
+                else {
+                    print("Station shared successfully")
+//                    print(autoID.key)
+                }
+            }
+        }
+        
         
         
     }
