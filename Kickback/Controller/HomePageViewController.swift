@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import PKHUD
 import SwipeCellKit
+import CRRefresh
 
 class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -17,7 +18,9 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var stationSwitcher: UISegmentedControl!
     @IBOutlet weak var notificationBarButton: UIBarButtonItem!
     
+    var filteredArray = [Station]()
     var stationArray = [Station]()
+    var sharedStationArray = [Station]()
     let user = Auth.auth().currentUser
     
     override func viewDidLoad() {
@@ -27,7 +30,21 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         
         addNavBarImage()
         loadStations()
+        loadSharedStations()
 //        getNumOfNotifications()
+        
+        /// animator: your customize animator, default is NormalHeaderAnimator
+        stationTableView.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in
+            
+            print("REFRESH")
+            
+            self?.loadSharedStations()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                /// Stop refresh when your job finished, it will reset refresh footer if completion is true
+                self?.stationTableView.cr.endHeaderRefresh()
+            })
+        }
 
         stationTableView.delegate = self
         stationTableView.dataSource = self
@@ -62,28 +79,28 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    func filterData() {
-        
-        //Filters so only the current user's tasks are loaded
-//        UserDataArray.stations = stationArray.filter {$0.user == UserDefaults.standard.string(forKey: "username")}
-        
-        //Orders the tasks based on when they were created
-//        UserDataArray.stations = UserDataArray.stations.sorted(by: {$0.timestamp >= $1.timestamp})
-        
-        stationTableView.reloadData()
-    }
+//    func filterData() {
+//
+//        //Filters so only the current user's tasks are loaded
+////        UserDataArray.stations = stationArray.filter {$0.user == UserDefaults.standard.string(forKey: "username")}
+//
+//        //Orders the tasks based on when they were created
+////        UserDataArray.stations = UserDataArray.stations.sorted(by: {$0.timestamp >= $1.timestamp})
+//
+//        stationTableView.reloadData()
+//    }
     
     //setup functions sideNave main TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return UserDataArray.stations.count
-        return stationArray.count
+        return filteredArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "stationCell")! as! StationTableViewCell
 //        let station = UserDataArray.stations[indexPath.row]
-        let station = stationArray[indexPath.row]
+        let station = filteredArray[indexPath.row]
         
         cell.delegate = self
         cell.selectionStyle = .none
@@ -101,7 +118,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         cell.stationName.text = station.stationName
-        cell.userLabel.text = station.user
+        cell.userLabel.text = station.owner
         
         return cell
     }
@@ -122,6 +139,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
 
             let station = snapshotValue["Name"]! as! String
             let user = snapshotValue["User"]! as! String
+            let owner = snapshotValue["Owner"]! as! String
             let playlists = snapshotValue["Playlists"]! as! [String]
             let friends = snapshotValue["Friends"]! as! [String]
             let timestamp = snapshotValue["Timestamp"]! as! String
@@ -129,6 +147,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             let dbStation = Station()
             dbStation.stationName = station
             dbStation.user = user
+            dbStation.owner = owner
             dbStation.playlists = playlists
             dbStation.friends = friends
             dbStation.timestamp = timestamp
@@ -138,7 +157,9 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             
             self.stationArray = self.stationArray.sorted(by: {$0.timestamp >= $1.timestamp})
             
-            self.stationTableView.reloadData()
+            self.filterData()
+            
+//            self.stationTableView.reloadData()
             
 //            HUD.hide()
 
@@ -169,15 +190,116 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func stationSwitch(_ sender: Any) {
+        filterData()
+    }
+    
+    func filterData() {
         switch stationSwitcher.selectedSegmentIndex {
         case 0: //MY STATIONS
             print("My Stations")
+            
+            filteredArray = stationArray.filter {$0.owner == UserDefaults.standard.string(forKey: "username")}
+            
+            //Smooth animation when moving cells around (replaces stationTableView.reloadData())
+            let range = NSMakeRange(0, self.stationTableView.numberOfSections)
+            let sections = NSIndexSet(indexesIn: range)
+            self.stationTableView.reloadSections(sections as IndexSet, with: .automatic)
+            
         case 1: //SHARED WITH ME
             print("Shared With Me")
-            getNumOfNotifications()
+            
+            filteredArray = stationArray.filter {$0.owner != UserDefaults.standard.string(forKey: "username")}
+            print("Filtered Array length: \(filteredArray.count)")
+            
+            //Smooth animation when moving cells around (replaces stationTableView.reloadData())
+            let range = NSMakeRange(0, self.stationTableView.numberOfSections)
+            let sections = NSIndexSet(indexesIn: range)
+            self.stationTableView.reloadSections(sections as IndexSet, with: .automatic)
+            
         default:
             break
         }
+    }
+    
+    //Searches through "Shared Stations" for current user
+    func loadSharedStations() {
+        
+        let ref = Database.database().reference().child("Shared Stations").queryOrdered(byChild: "User").queryEqual(toValue: UserDefaults.standard.string(forKey: "username"))
+        
+        ref.observeSingleEvent(of: .value, with:{ (snapshot: DataSnapshot) in
+            
+            for snap in snapshot.children {
+                print(snapshot.childrenCount)
+                
+                let snapKey = snap as! DataSnapshot
+                let key = snapKey.key
+                
+                let snapMatch = (snap as! DataSnapshot).value! as! Dictionary<String,Any>
+                
+                let station = snapMatch["Name"]! as! String
+                let user = snapMatch["User"]! as! String
+                let owner = snapMatch["Owner"]! as! String
+                let playlists = snapMatch["Playlists"]! as! [String]
+                var friends = snapMatch["Friends"]! as! [String]
+                let timestamp = snapMatch["Timestamp"]! as! String
+                
+                if friends.count == 1 && friends.contains("N/A") {
+                    friends.removeAll()
+                    friends.append(owner)
+                } else {
+                    friends.append(owner)
+                }
+                
+                let dbSharedStation = Station()
+                dbSharedStation.stationName = station
+                dbSharedStation.user = user
+                dbSharedStation.owner = owner
+                dbSharedStation.playlists = playlists
+                dbSharedStation.friends = friends
+                dbSharedStation.timestamp = timestamp
+                dbSharedStation.key = key
+                
+//                self.stationArray.append(dbSharedStation)
+                print(dbSharedStation.stationName)
+                
+                self.addShareStation(station: station, user: user, owner: owner, playlists: playlists, friends: friends, timestamp: timestamp, key: key)
+                print("ADDING SHARED STATION")
+                
+                
+            }
+            
+//            self.filterData()
+            print("FINISHED")
+            
+        })
+        
+    }
+    
+    //Creates a new Task based on matching task found in "Tasks to Share"
+    func addShareStation(station: String, user: String, owner: String, playlists: [String], friends: [String], timestamp: String, key: String) {
+        
+        let addStation = Database.database().reference().child("Stations").child("\(Auth.auth().currentUser!.uid)")
+        let timestamp = "\(Date())"
+        
+        let postDictionary = ["Name": station,
+                              "User": user,
+                              "Owner": owner,
+                              "Friends": friends,
+                              "Playlists": playlists,
+                              "Timestamp": timestamp] as [String : Any]
+        
+        addStation.childByAutoId().setValue(postDictionary) {
+            (error, reference) in
+            
+            if(error != nil) {
+                print(error!)
+            }
+            else {
+                print("Shared Station saved successfully")
+                Database.database().reference().child("Shared Stations").child(key).removeValue()
+            }
+        }
+        
     }
     
     func addNavBarImage() {
@@ -218,9 +340,25 @@ extension HomePageViewController: SwipeTableViewCellDelegate {
             alert.addAction(UIAlertAction(title: "Delete \(self.stationArray[indexPath.row].stationName)", style: .destructive , handler:{ (UIAlertAction)in
                 print("User clicked Delete button")
                 
-                Database.database().reference().child("Stations").child("\(Auth.auth().currentUser!.uid)").child(self.stationArray[indexPath.row].key).removeValue()
+                Database.database().reference().child("Stations").child("\(Auth.auth().currentUser!.uid)").child(self.filteredArray[indexPath.row].key).removeValue()
                 
-                self.stationArray.remove(at: indexPath.row)
+                //Remove from total station array
+                var x = 0
+                var found = false
+                while x < self.stationArray.count && !found{
+                    if self.stationArray[x].key == self.filteredArray[indexPath.row].key {
+                        print(self.stationArray[x].stationName)
+                        self.stationArray.remove(at: x)
+                        
+                        found = true
+                    }
+                    else {
+                        x += 1
+                    }
+                }
+                
+                //Remove from filtered array
+                self.filteredArray.remove(at: indexPath.row)
 
                 action.fulfill(with: .delete)
             }))
