@@ -20,4 +20,6 @@
 //  pause button made by Chanut [https://www.flaticon.com/authors/chanut] from www.flaticon.com
 //  forward button made by Chanut [https://www.flaticon.com/authors/chanut] from www.flaticon.com
 //  backward button made by Chanut [https://www.flaticon.com/authors/chanut] from www.flaticon.com
+//  empty-heart made by Freepik [https://www.freepik.com/] from www.flaticon.com
+//  heart made by Freepik [https://www.freepik.com/] from www.flaticon.com
 
