@@ -79,17 +79,6 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-//    func filterData() {
-//
-//        //Filters so only the current user's tasks are loaded
-////        UserDataArray.stations = stationArray.filter {$0.user == UserDefaults.standard.string(forKey: "username")}
-//
-//        //Orders the tasks based on when they were created
-////        UserDataArray.stations = UserDataArray.stations.sorted(by: {$0.timestamp >= $1.timestamp})
-//
-//        stationTableView.reloadData()
-//    }
-    
     //setup functions sideNave main TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return UserDataArray.stations.count
@@ -121,6 +110,16 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         cell.userLabel.text = station.owner
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if stationSwitcher.selectedSegmentIndex == 0 {
+            self.performSegue(withIdentifier: "goToNowPlaying", sender: self)
+        } else {
+            self.performSegue(withIdentifier: "goToSharedStation", sender: self)
+        }
+        
     }
     
     
@@ -195,29 +194,31 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     
     func filterData() {
         switch stationSwitcher.selectedSegmentIndex {
-        case 0: //MY STATIONS
-            print("My Stations")
+            case 0: //MY STATIONS
+                print("My Stations")
+                
+                filteredArray = stationArray.filter {$0.owner == UserDefaults.standard.string(forKey: "username")}
+                
+                self.stationTableView.reloadData()
+                //Smooth animation when moving cells around (replaces stationTableView.reloadData())
+//                let range = NSMakeRange(0, self.stationTableView.numberOfSections)
+//                let sections = NSIndexSet(indexesIn: range)
+//                self.stationTableView.reloadSections(sections as IndexSet, with: .automatic)
             
-            filteredArray = stationArray.filter {$0.owner == UserDefaults.standard.string(forKey: "username")}
+            case 1: //SHARED WITH ME
+                print("Shared With Me")
+                
+                filteredArray = stationArray.filter {$0.owner != UserDefaults.standard.string(forKey: "username")}
+                print("Filtered Array length: \(filteredArray.count)")
+                
+                self.stationTableView.reloadData()
+                //Smooth animation when moving cells around (replaces stationTableView.reloadData())
+//                let range = NSMakeRange(0, self.stationTableView.numberOfSections)
+//                let sections = NSIndexSet(indexesIn: range)
+//                self.stationTableView.reloadSections(sections as IndexSet, with: .automatic)
             
-            //Smooth animation when moving cells around (replaces stationTableView.reloadData())
-            let range = NSMakeRange(0, self.stationTableView.numberOfSections)
-            let sections = NSIndexSet(indexesIn: range)
-            self.stationTableView.reloadSections(sections as IndexSet, with: .automatic)
-            
-        case 1: //SHARED WITH ME
-            print("Shared With Me")
-            
-            filteredArray = stationArray.filter {$0.owner != UserDefaults.standard.string(forKey: "username")}
-            print("Filtered Array length: \(filteredArray.count)")
-            
-            //Smooth animation when moving cells around (replaces stationTableView.reloadData())
-            let range = NSMakeRange(0, self.stationTableView.numberOfSections)
-            let sections = NSIndexSet(indexesIn: range)
-            self.stationTableView.reloadSections(sections as IndexSet, with: .automatic)
-            
-        default:
-            break
+            default:
+                break
         }
     }
     

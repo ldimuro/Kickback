@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		74ACEB922997F44389C7D929 /* Pods_Kickback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 186D215F1CCBE421EBD65B60 /* Pods_Kickback.framework */; };
+		842D14D7212628C40047D4FF /* QueueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842D14D5212628C40047D4FF /* QueueTableViewCell.swift */; };
+		842D14D8212628C40047D4FF /* QueueTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842D14D6212628C40047D4FF /* QueueTableViewCell.xib */; };
 		844C9DDC20FC576D0029269D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844C9DDB20FC576D0029269D /* AppDelegate.swift */; };
 		844C9DDE20FC576D0029269D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844C9DDD20FC576D0029269D /* LoginViewController.swift */; };
 		844C9DE120FC576D0029269D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844C9DDF20FC576D0029269D /* Main.storyboard */; };
@@ -43,6 +45,8 @@
 /* Begin PBXFileReference section */
 		186D215F1CCBE421EBD65B60 /* Pods_Kickback.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kickback.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		19033200E184BD247ABCD82E /* Pods-Kickback.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kickback.release.xcconfig"; path = "Pods/Target Support Files/Pods-Kickback/Pods-Kickback.release.xcconfig"; sourceTree = "<group>"; };
+		842D14D5212628C40047D4FF /* QueueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueTableViewCell.swift; sourceTree = "<group>"; };
+		842D14D6212628C40047D4FF /* QueueTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QueueTableViewCell.xib; sourceTree = "<group>"; };
 		844C9DD820FC576D0029269D /* Kickback.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kickback.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		844C9DDB20FC576D0029269D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		844C9DDD20FC576D0029269D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -181,6 +185,8 @@
 				84690FBC2117F25500F3FA53 /* AddStationTableViewCell.xib */,
 				84B4A7E5211B9B6600CAC2E3 /* NotificationTableViewCell.swift */,
 				84B4A7E6211B9B6600CAC2E3 /* NotificationTableViewCell.xib */,
+				842D14D5212628C40047D4FF /* QueueTableViewCell.swift */,
+				842D14D6212628C40047D4FF /* QueueTableViewCell.xib */,
 			);
 			path = "Custom Cells";
 			sourceTree = "<group>";
@@ -277,6 +283,7 @@
 				84EA632E20FDCC6100F84701 /* StationTableViewCell.xib in Resources */,
 				844C9DE320FC576F0029269D /* Assets.xcassets in Resources */,
 				84690FBE2117F25500F3FA53 /* AddStationTableViewCell.xib in Resources */,
+				842D14D8212628C40047D4FF /* QueueTableViewCell.xib in Resources */,
 				844C9DE120FC576D0029269D /* Main.storyboard in Resources */,
 				84A13A0B2108509400146E98 /* SearchTableViewCell.xib in Resources */,
 			);
@@ -349,6 +356,7 @@
 				84690FBD2117F25500F3FA53 /* AddStationTableViewCell.swift in Sources */,
 				849FBFF92101AA9900387044 /* AddStationNavigationViewController.swift in Sources */,
 				84BF6455210AB9DB007360A1 /* SearchUser.swift in Sources */,
+				842D14D7212628C40047D4FF /* QueueTableViewCell.swift in Sources */,
 				8455AB1921004DF7009BCBDB /* AddStationViewController.swift in Sources */,
 				847935452118D5CE00C47ED1 /* AddFriendsViewController.swift in Sources */,
 				8478A77C2106D4A800FB099B /* ProfilePageViewController.swift in Sources */,
