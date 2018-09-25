@@ -107,8 +107,11 @@ class ProfilePageViewController: UIViewController, UIImagePickerControllerDelega
         })
     }
     
-    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if var pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
+        if var pickedImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage {
             
             pickedImage = pickedImage.resizeWithWidth(width: 256)!
             
@@ -133,7 +136,7 @@ class ProfilePageViewController: UIViewController, UIImagePickerControllerDelega
     func savePictureToFirebase() {
         //Save Profile Picture to Firebase
         var data = Data()
-        data = UIImageJPEGRepresentation(profilePicture.image!, 0.5)!
+        data = profilePicture.image!.jpegData(compressionQuality: 0.5)!
         
         let filepath = "Profile Pictures/\(UserDefaults.standard.string(forKey: "username")!)-profile"
         let storageRef = Storage.storage().reference().child(filepath)
@@ -186,3 +189,13 @@ class ProfilePageViewController: UIViewController, UIImagePickerControllerDelega
 }
 
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
+}

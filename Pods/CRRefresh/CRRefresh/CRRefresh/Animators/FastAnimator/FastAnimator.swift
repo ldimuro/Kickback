@@ -25,19 +25,19 @@
 
 import UIKit
 
-public class FastAnimator: UIView, CRRefreshProtocol {
+open class FastAnimator: UIView, CRRefreshProtocol {
     
-    public var view: UIView { return self }
+    open var view: UIView { return self }
     
-    public var insets: UIEdgeInsets = .zero
+    open var insets: UIEdgeInsets = .zero
     
-    public var trigger: CGFloat = 55.0
+    open var trigger: CGFloat = 55.0
     
-    public var execute: CGFloat = 55.0
+    open var execute: CGFloat = 55.0
     
-    public var endDelay: CGFloat = 1
+    open var endDelay: CGFloat = 1.5
     
-    public var hold: CGFloat = 55.0
+    open var hold: CGFloat = 55.0
     
     private(set) var color: UIColor = .init(rgb: (214, 214, 214))
     
@@ -50,32 +50,39 @@ public class FastAnimator: UIView, CRRefreshProtocol {
 
     //MARK: CRRefreshProtocol
     /// 开始刷新
-    public func refreshBegin(view: CRRefreshComponent) {
+    open func refreshBegin(view: CRRefreshComponent) {
         fastLayer?.arrow?.startAnimation().animationEnd = { [weak self] in
             self?.fastLayer?.circle?.startAnimation()
         }
     }
     
     /// 结束刷新
-    public func refreshEnd(view: CRRefreshComponent, finish: Bool) {
+    open func refreshEnd(view: CRRefreshComponent, finish: Bool) {
         if finish {
             fastLayer?.arrow?.endAnimation()
             fastLayer?.circle?.endAnimation(finish: finish)
+            fastLayer?.arrow?.setAffineTransform(CGAffineTransform.identity)
         }
     }
     
-    public func refreshWillEnd(view: CRRefreshComponent) {
+    open func refreshWillEnd(view: CRRefreshComponent) {
         fastLayer?.circle?.endAnimation(finish: false)
     }
     
     /// 刷新进度的变化
-    public func refresh(view: CRRefreshComponent, progressDidChange progress: CGFloat) {
-        
+    open func refresh(view: CRRefreshComponent, progressDidChange progress: CGFloat) {
+        if progress >= 1 {
+            let transform = CGAffineTransform.identity.rotated(by: CGFloat(Double.pi))
+            fastLayer?.arrow?.setAffineTransform(transform)
+        } else {
+            let transform = CGAffineTransform.identity.rotated(by: CGFloat(2 * Double.pi))
+            fastLayer?.arrow?.setAffineTransform(transform)
+        }
     }
     
     /// 刷新状态的变化
-    public func refresh(view: CRRefreshComponent, stateDidChange state: CRRefreshState) {
-        
+    open func refresh(view: CRRefreshComponent, stateDidChange state: CRRefreshState) {
+
     }
     
     //MARK: Override
@@ -84,25 +91,32 @@ public class FastAnimator: UIView, CRRefreshProtocol {
         backgroundColor = UIColor.clear
     }
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         if fastLayer == nil {
             let width  = frame.width
             let height = frame.height
-            fastLayer = FastLayer(frame: .init(x: width/2 - 14, y: height/2 - 14, width: 28, height: 28), color: color, arrowColor: arrowColor, lineWidth: lineWidth)
+            fastLayer = FastLayer(frame: .init(x: width/2 - 14,
+                                               y: height/2 - 14,
+                                               width: 28, height: 28),
+                                  color: color,
+                                  arrowColor: arrowColor,
+                                  lineWidth: lineWidth)
             layer.addSublayer(fastLayer!)
         }
     }
     
     //MARK: Initial Methods
-   public init(frame: CGRect, color: UIColor = .init(rgb: (214, 214, 214)), arrowColor: UIColor = .init(rgb: (165, 165, 165)), lineWidth: CGFloat = 1) {
+    public init(frame: CGRect,
+             color: UIColor = .init(rgb: (214, 214, 214)),
+             arrowColor: UIColor = .init(rgb: (165, 165, 165)),
+             lineWidth: CGFloat = 1) {
         self.color      = color
         self.arrowColor = arrowColor
         self.lineWidth  = lineWidth
         super.init(frame: frame)
         backgroundColor = UIColor.clear
     }
-    
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

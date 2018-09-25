@@ -159,7 +159,7 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
                 dbNotification.user = user
                 dbNotification.recipient = recipient
                 dbNotification.timestamp = timestamp
-                dbNotification.key = autoID.key
+                dbNotification.key = autoID.key!
                 
                 self.notificationArray.append(dbNotification)
                 

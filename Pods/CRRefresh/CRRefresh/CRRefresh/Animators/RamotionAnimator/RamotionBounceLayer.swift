@@ -98,6 +98,11 @@ class RamotionBounceLayer: CALayer {
         }
     }
     
+    func clear() {
+        displayLink?.invalidate()
+        displayLink = nil
+    }
+    
     //MARK: Private Methods
     @objc private func displayAction() {
         let offY = ballLayer.circleLayer.presentation()?.frame.origin.y
@@ -150,11 +155,12 @@ class RamotionBounceLayer: CALayer {
     
     private func addDisPlay() {
         displayLink = CADisplayLink(target: self, selector: #selector(displayAction))
-        displayLink?.add(to: .main, forMode: .commonModes)
+        displayLink?.add(to: .main, forMode: RunLoop.Mode.common)
     }
     
     private func removeDisPlay() {
         displayLink?.invalidate()
         displayLink = nil
+        print("removeDisPlay")
     }
 }

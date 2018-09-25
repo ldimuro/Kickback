@@ -28,9 +28,9 @@ import UIKit
 class FastArrowLayer: CALayer,
                       CAAnimationDelegate {
     
-    let color: UIColor
+    var color: UIColor = UIColor.init(rgb: (165, 165, 165))
     
-    let lineWidth: CGFloat
+    var lineWidth: CGFloat = 1
     
     private var lineLayer: CAShapeLayer?
     
@@ -41,7 +41,9 @@ class FastArrowLayer: CALayer,
     var animationEnd: (()->Void)?
     
     //MARK: Initial Methods
-    init(frame: CGRect, color: UIColor = .init(rgb: (165, 165, 165)), lineWidth: CGFloat = 1) {
+    init(frame: CGRect,
+         color: UIColor = .init(rgb: (165, 165, 165)),
+         lineWidth: CGFloat = 1) {
         self.color      = color
         self.lineWidth  = lineWidth
         super.init()
@@ -66,7 +68,7 @@ class FastArrowLayer: CALayer,
         lineLayer?.lineWidth   = lineWidth*2
         lineLayer?.strokeColor = color.cgColor
         lineLayer?.fillColor   = UIColor.clear.cgColor
-        lineLayer?.lineCap     = kCALineCapRound
+        lineLayer?.lineCap     = CAShapeLayerLineCap.round
         lineLayer?.path        = path.cgPath
         lineLayer?.strokeStart = 0.5
         addSublayer(lineLayer!)
@@ -82,8 +84,8 @@ class FastArrowLayer: CALayer,
         arrowLayer = CAShapeLayer()
         arrowLayer?.lineWidth   = lineWidth*2
         arrowLayer?.strokeColor = color.cgColor
-        arrowLayer?.lineCap     = kCALineCapRound
-        arrowLayer?.lineJoin    = kCALineJoinRound
+        arrowLayer?.lineCap     = CAShapeLayerLineCap.round
+        arrowLayer?.lineJoin    = CAShapeLayerLineJoin.round
         arrowLayer?.fillColor   = UIColor.clear.cgColor
         arrowLayer?.path        = path.cgPath
         addSublayer(arrowLayer!)
@@ -97,17 +99,17 @@ class FastArrowLayer: CALayer,
         start.fromValue = 0
         start.toValue   = 0.5
         start.isRemovedOnCompletion = false
-        start.fillMode  = kCAFillModeForwards
+        start.fillMode  = CAMediaTimingFillMode.forwards
         start.delegate    = self
-        start.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        start.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         
         let end = CABasicAnimation(keyPath: "strokeEnd")
         end.duration  = animationDuration
         end.fromValue = 1
         end.toValue   = 0.5
         end.isRemovedOnCompletion = false
-        end.fillMode  = kCAFillModeForwards
-        end.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        end.fillMode  = CAMediaTimingFillMode.forwards
+        end.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         
         arrowLayer?.add(start, forKey: "strokeStart")
         arrowLayer?.add(end, forKey: "strokeEnd")
@@ -127,8 +129,8 @@ class FastArrowLayer: CALayer,
         start.fromValue = 0.5
         start.toValue = 0
         start.isRemovedOnCompletion = false
-        start.fillMode  = kCAFillModeForwards
-        start.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        start.fillMode  = CAMediaTimingFillMode.forwards
+        start.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         start.duration  = animationDuration/2
         lineLayer?.add(start, forKey: "strokeStart")
         
@@ -138,23 +140,25 @@ class FastArrowLayer: CALayer,
         end.fromValue = 1
         end.toValue   = 0.03
         end.isRemovedOnCompletion = false
-        end.fillMode  = kCAFillModeForwards
+        end.fillMode  = CAMediaTimingFillMode.forwards
         end.delegate  = self
-        end.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        end.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         lineLayer?.add(end, forKey: "strokeEnd")
     }
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        if flag {
-            if let anim = anim as? CABasicAnimation {
-                if anim.keyPath == "strokeStart" {
-                    arrowLayer?.isHidden = true
-                    addLineAnimation()
-                }else {
-                    lineLayer?.isHidden = true
-                    animationEnd?()
-                }
+        if let anim = anim as? CABasicAnimation {
+            if anim.keyPath == "strokeStart" {
+                arrowLayer?.isHidden = true
+                addLineAnimation()
+            }else {
+                lineLayer?.isHidden = true
+                animationEnd?()
             }
         }
+    }
+    
+    override init(layer: Any) {
+        super.init(layer: layer)
     }
 }

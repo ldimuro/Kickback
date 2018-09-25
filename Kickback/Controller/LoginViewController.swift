@@ -66,6 +66,8 @@ class ViewController: UIViewController {
                 let snapKey = snap as! DataSnapshot
                 let key = snapKey.key
                 
+                print("Username: \(key)")
+                
                 let value = snapKey.value as! Dictionary<String,Any>
                 let profilePic = value["Profile Picture"] as! String
                 

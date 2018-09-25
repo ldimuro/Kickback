@@ -166,7 +166,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
             else {
                 print("Notification sent successfully")
-                print(autoID.key)
+                print(autoID.key!)
             }
         }
     }
