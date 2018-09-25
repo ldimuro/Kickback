@@ -49,7 +49,7 @@ extension UIBarButtonItem {
             font = UIFont.monospacedDigitSystemFont(ofSize: fontSize, weight: UIFont.Weight.bold)
         }
         
-        let badgeSize = text.size(withAttributes: [kCTFontAttributeName as NSAttributedStringKey: font])
+        let badgeSize = text.size(withAttributes: [kCTFontAttributeName as NSAttributedString.Key: font])
         
         // Initialize Badge
         let badge = CAShapeLayer()
@@ -73,7 +73,7 @@ extension UIBarButtonItem {
         // Initialiaze Badge's label
         let label = CATextLayer()
         label.string = text
-        label.alignmentMode = kCAAlignmentCenter
+        label.alignmentMode = CATextLayerAlignmentMode.center
         label.font = font
         label.fontSize = font.pointSize
         

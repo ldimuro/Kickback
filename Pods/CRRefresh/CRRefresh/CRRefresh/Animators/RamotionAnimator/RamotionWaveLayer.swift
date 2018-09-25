@@ -44,7 +44,7 @@ class RamotionWaveLayer: CALayer, CAAnimationDelegate {
     var isAnimation: Bool = false
     // 计时器
     var displayLink: CADisplayLink?
-    
+
     deinit {
         displayLink?.invalidate()
         displayLink = nil
@@ -114,9 +114,6 @@ class RamotionWaveLayer: CALayer, CAAnimationDelegate {
         endBoundAnimation()
     }
     
-    //MARK: Override
-    
-    
     //MARK: Privater Methods
     private func wavePath(x: CGFloat, y: CGFloat) -> CGPath {
         let w = frame.width
@@ -127,7 +124,7 @@ class RamotionWaveLayer: CALayer, CAAnimationDelegate {
             path.addLine(to: .init(x: w, y: y))
             path.addLine(to: .init(x: 0, y: y))
             path.addLine(to: .zero)
-        }else {
+        } else {
             path.move(to: .zero)
             path.addLine(to: .init(x: w, y: 0))
             path.addLine(to: .init(x: w, y: execute))
@@ -149,19 +146,19 @@ class RamotionWaveLayer: CALayer, CAAnimationDelegate {
     }
     
     @objc private func displayAction() {
-            if let frame = reference.layer.presentation()?.frame {
-                DispatchQueue.global().async {
-                    let path = self.displayWavePath(x: 0, y: frame.origin.y + referenceHeight/2)
-                    DispatchQueue.main.async {
-                        self.waveLayer.path = path
-                    }
+        if let frame = reference.layer.presentation()?.frame {
+            DispatchQueue.global().async {
+                let path = self.displayWavePath(x: 0, y: frame.origin.y + referenceHeight/2)
+                DispatchQueue.main.async {
+                    self.waveLayer.path = path
                 }
             }
+        }
     }
     
     private func addDisPlay() {
         displayLink = CADisplayLink(target: self, selector: #selector(displayAction))
-        displayLink?.add(to: .main, forMode: .commonModes)
+        displayLink?.add(to: .main, forMode: RunLoop.Mode.common)
     }
     
     private func removeDisPlay() {
@@ -179,7 +176,7 @@ class RamotionWaveLayer: CALayer, CAAnimationDelegate {
     
     private func boundAnimation(x: CGFloat, y: CGFloat) {
         let bounce = CAKeyframeAnimation(keyPath: "transform.translation.y")
-        bounce.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+        bounce.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
         bounce.duration = bounceDuration
         bounce.values = [
             reference.frame.origin.y,
@@ -190,14 +187,14 @@ class RamotionWaveLayer: CALayer, CAAnimationDelegate {
             y
         ]
         bounce.isRemovedOnCompletion = true
-        bounce.fillMode = kCAFillModeForwards
+        bounce.fillMode = CAMediaTimingFillMode.forwards
         bounce.delegate = self
         reference.layer.add(bounce, forKey: "return")
     }
     
     private func boundDownAnimation(x: CGFloat, y: CGFloat) {
         let bounce = CAKeyframeAnimation(keyPath: "transform.translation.y")
-        bounce.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+        bounce.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
         bounce.duration = bounceDuration/2
         bounce.values = [
             y,
@@ -205,7 +202,7 @@ class RamotionWaveLayer: CALayer, CAAnimationDelegate {
             y
         ]
         bounce.isRemovedOnCompletion = true
-        bounce.fillMode = kCAFillModeForwards
+        bounce.fillMode = CAMediaTimingFillMode.forwards
         bounce.delegate = self
         reference.layer.add(bounce, forKey: "returnDown")
     }

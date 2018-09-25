@@ -15,7 +15,6 @@
 		844C9DE120FC576D0029269D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844C9DDF20FC576D0029269D /* Main.storyboard */; };
 		844C9DE320FC576F0029269D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 844C9DE220FC576F0029269D /* Assets.xcassets */; };
 		844C9DE620FC576F0029269D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844C9DE420FC576F0029269D /* LaunchScreen.storyboard */; };
-		844C9DEE20FC5ECD0029269D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 844C9DED20FC5ECD0029269D /* GoogleService-Info.plist */; };
 		844C9DF020FC613E0029269D /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844C9DEF20FC613E0029269D /* HomePageViewController.swift */; };
 		8455AB1721004956009BCBDB /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455AB1621004956009BCBDB /* TabBarViewController.swift */; };
 		8455AB1921004DF7009BCBDB /* AddStationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455AB1821004DF7009BCBDB /* AddStationViewController.swift */; };
@@ -40,6 +39,7 @@
 		84EA632D20FDCC6100F84701 /* StationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA632B20FDCC6100F84701 /* StationTableViewCell.swift */; };
 		84EA632E20FDCC6100F84701 /* StationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EA632C20FDCC6100F84701 /* StationTableViewCell.xib */; };
 		84EA633020FDD60C00F84701 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA632F20FDD60C00F84701 /* Station.swift */; };
+		84F41FBE215AE87F003FA1EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84F41FBD215AE87F003FA1EA /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,7 +54,6 @@
 		844C9DE220FC576F0029269D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		844C9DE520FC576F0029269D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		844C9DE720FC576F0029269D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		844C9DED20FC5ECD0029269D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		844C9DEF20FC613E0029269D /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		8455AB1621004956009BCBDB /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		8455AB1821004DF7009BCBDB /* AddStationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStationViewController.swift; sourceTree = "<group>"; };
@@ -79,6 +78,7 @@
 		84EA632B20FDCC6100F84701 /* StationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationTableViewCell.swift; sourceTree = "<group>"; };
 		84EA632C20FDCC6100F84701 /* StationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StationTableViewCell.xib; sourceTree = "<group>"; };
 		84EA632F20FDD60C00F84701 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
+		84F41FBD215AE87F003FA1EA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A9FDBA24BC6CAD2AC2A446F0 /* Pods-Kickback.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kickback.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Kickback/Pods-Kickback.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,8 +118,8 @@
 				8455AB1B2100554E009BCBDB /* View */,
 				8455AB1A21005542009BCBDB /* Controller */,
 				8455AB1C21005557009BCBDB /* Model */,
-				844C9DED20FC5ECD0029269D /* GoogleService-Info.plist */,
 				844C9DE720FC576F0029269D /* Info.plist */,
+				84F41FBD215AE87F003FA1EA /* GoogleService-Info.plist */,
 				844C9DE220FC576F0029269D /* Assets.xcassets */,
 				84A13A0C21085C5300146E98 /* FlaticonCredits.swift */,
 				84C0A1A1211BC83800389E6A /* UIBarButtonItem+Badge.swift */,
@@ -251,6 +251,7 @@
 				TargetAttributes = {
 					844C9DD720FC576D0029269D = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -279,7 +280,7 @@
 			files = (
 				84B4A7E8211B9B6600CAC2E3 /* NotificationTableViewCell.xib in Resources */,
 				844C9DE620FC576F0029269D /* LaunchScreen.storyboard in Resources */,
-				844C9DEE20FC5ECD0029269D /* GoogleService-Info.plist in Resources */,
+				84F41FBE215AE87F003FA1EA /* GoogleService-Info.plist in Resources */,
 				84EA632E20FDCC6100F84701 /* StationTableViewCell.xib in Resources */,
 				844C9DE320FC576F0029269D /* Assets.xcassets in Resources */,
 				84690FBE2117F25500F3FA53 /* AddStationTableViewCell.xib in Resources */,
@@ -320,7 +321,8 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/CRRefresh/CRRefresh.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/OAuthSwift/OAuthSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
@@ -332,7 +334,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CRRefresh.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OAuthSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
@@ -527,7 +530,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.LouDiMuro.Kickback;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -546,7 +549,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.LouDiMuro.Kickback;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

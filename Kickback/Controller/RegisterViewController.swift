@@ -101,7 +101,7 @@ class RegisterViewController: UIViewController {
         
         //Save Profile Picture to Firebase
         var data = Data()
-        data = UIImageJPEGRepresentation(image, 0.5)!
+        data = image.jpegData(compressionQuality: 0.5)!
         
         let filepath = "Profile Pictures/\(UserDefaults.standard.string(forKey: "username")!)-profile"
         let storageRef = Storage.storage().reference().child(filepath)

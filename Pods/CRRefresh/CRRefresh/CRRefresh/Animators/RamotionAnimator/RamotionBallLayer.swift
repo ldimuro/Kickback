@@ -25,11 +25,15 @@
 
 import UIKit
 
-private var timeFunc = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+private var timeFunc = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
 
 private var upDuration: Double = 0.5
 
 class RamotionBallLayer: CALayer {
+    
+    deinit {
+        circleLayer.stopAnimation()
+    }
     
     var circleLayer: CircleLayer!
     
@@ -40,6 +44,7 @@ class RamotionBallLayer: CALayer {
         let circleWidth = min(frame.size.width, frame.size.height)
         circleLayer = CircleLayer(size: circleWidth, moveUpDist: moveUpDist, frame: frame, color: color)
         addSublayer(circleLayer)
+        isHidden = true
     }
     
     override init(layer: Any) {
@@ -54,16 +59,20 @@ class RamotionBallLayer: CALayer {
         circleLayer.startAnimation()
     }
     
-    func endAnimation(_ complition:(()->())? = nil) {
+    func endAnimation(_ complition: (()-> Void)? = nil) {
         circleLayer.endAnimation(complition)
     }
 }
 
 class CircleLayer :CAShapeLayer, CAAnimationDelegate {
     
+    deinit {
+        spiner?.stopAnimation()
+    }
+    
     var moveUpDist: CGFloat = 0
     var spiner: SpinerLayer?
-    var didEndAnimation: (()->())?
+    var didEndAnimation: (() -> Void)?
     
     init(size: CGFloat, moveUpDist: CGFloat, frame: CGRect, color: UIColor = UIColor.white) {
         self.moveUpDist = moveUpDist
@@ -96,8 +105,8 @@ class CircleLayer :CAShapeLayer, CAAnimationDelegate {
     
     func startAnimation() {
         moveUp(moveUpDist)
-        DispatchQueue.main.asyncAfter(deadline: .now() + upDuration) {
-            self.spiner?.animation()
+        DispatchQueue.main.asyncAfter(deadline: .now() + upDuration) { [weak self] in
+            self?.spiner?.animation()
         }
     }
     
@@ -107,20 +116,26 @@ class CircleLayer :CAShapeLayer, CAAnimationDelegate {
         didEndAnimation = complition
     }
     
+    func stopAnimation() {
+        spiner?.stopAnimation()
+        removeAllAnimations()
+        didEndAnimation?()
+    }
+    
     func moveUp(_ distance: CGFloat) {
         let move = CABasicAnimation(keyPath: "position")
         
         move.fromValue = NSValue(cgPoint: position)
-        move.toValue = NSValue(cgPoint: CGPoint(x: position.x, y: position.y - distance))
+        move.toValue = NSValue(cgPoint: CGPoint(x: position.x,
+                                                y: position.y - distance))
         
         move.duration = upDuration
         move.timingFunction = timeFunc
         
-        move.fillMode = kCAFillModeForwards
+        move.fillMode = CAMediaTimingFillMode.forwards
         move.isRemovedOnCompletion = false
         add(move, forKey: move.keyPath)
     }
-    
     
     func moveDown(_ distance: CGFloat) {
         let move = CABasicAnimation(keyPath: "position")
@@ -131,21 +146,19 @@ class CircleLayer :CAShapeLayer, CAAnimationDelegate {
         move.duration = upDuration
         move.timingFunction = timeFunc
         
-        move.fillMode = kCAFillModeForwards
+        move.fillMode = CAMediaTimingFillMode.forwards
         move.isRemovedOnCompletion = false
         move.delegate = self
         add(move, forKey: move.keyPath)
     }
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        if flag {
-            didEndAnimation?()
-        }
+        didEndAnimation?()
     }
 }
 
 
-class SpinerLayer :CAShapeLayer, CAAnimationDelegate {
+class SpinerLayer: CAShapeLayer, CAAnimationDelegate {
     
     init(superLayerFrame: CGRect, ballSize: CGFloat, color: UIColor = UIColor.white) {
         super.init()
@@ -161,7 +174,7 @@ class SpinerLayer :CAShapeLayer, CAAnimationDelegate {
         self.fillColor = nil
         self.strokeColor = color.cgColor
         self.lineWidth = 2
-        self.lineCap = kCALineCapRound
+        self.lineCap = CAShapeLayerLineCap.round
         
         self.strokeStart = 0
         self.strokeEnd = 0
@@ -179,9 +192,9 @@ class SpinerLayer :CAShapeLayer, CAAnimationDelegate {
         rotate.fromValue = 0
         rotate.toValue = Double.pi * 2
         rotate.duration = 1
-        rotate.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        rotate.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
         rotate.repeatCount = HUGE
-        rotate.fillMode = kCAFillModeForwards
+        rotate.fillMode = CAMediaTimingFillMode.forwards
         rotate.isRemovedOnCompletion = false
         self.add(rotate, forKey: rotate.keyPath)
         
@@ -193,9 +206,9 @@ class SpinerLayer :CAShapeLayer, CAAnimationDelegate {
         endPoint.fromValue = 0
         endPoint.toValue = 1
         endPoint.duration = 1.8
-        endPoint.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        endPoint.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
         endPoint.repeatCount = HUGE
-        endPoint.fillMode = kCAFillModeForwards
+        endPoint.fillMode = CAMediaTimingFillMode.forwards
         endPoint.isRemovedOnCompletion = false
         endPoint.delegate = self
         add(endPoint, forKey: endPoint.keyPath)
@@ -206,7 +219,7 @@ class SpinerLayer :CAShapeLayer, CAAnimationDelegate {
         startPoint.fromValue = 0
         startPoint.toValue = 1
         startPoint.duration = 0.8
-        startPoint.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        startPoint.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
         startPoint.repeatCount = HUGE
         startPoint.delegate = self
         add(startPoint, forKey: startPoint.keyPath)

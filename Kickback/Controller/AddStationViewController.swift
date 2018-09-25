@@ -172,7 +172,7 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
                 }
                 else {
                     print("Notification sent successfully")
-                    print(autoID.key)
+                    print(autoID.key!)
                 }
             }
         }
