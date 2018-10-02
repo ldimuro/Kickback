@@ -9,20 +9,37 @@
 import UIKit
 import Firebase
 import FirebaseStorage
-import OAuthSwift
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate, SPTAppRemoteDelegate, SPTAppRemotePlayerStateDelegate {
 
     var window: UIWindow?
+    let redirect = "kickback-login://callback"
     
-//    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-//        if (url.host == "oauth-callback") {
-//            OAuthSwift.handle(url: url)
-//        }
-//        return true
-//    }
-
+    let SpotifyClientID = "c4964a218c214295899a6ec725b44451"
+    let SpotifyRedirectURL = URL(string: "kickback-login://callback")!
+    
+    lazy var configuration = SPTConfiguration(
+        clientID: SpotifyClientID,
+        redirectURL: SpotifyRedirectURL
+    )
+    
+    lazy var sessionManager: SPTSessionManager = {
+        if let tokenSwapURL = URL(string: "http://www.kickback-spotify.herokuapp.com/api/token"),
+            let tokenRefreshURL = URL(string: "http://www.kickback-spotify.herokuapp.com/api/refresh_token") {
+            self.configuration.tokenSwapURL = tokenSwapURL
+            self.configuration.tokenRefreshURL = tokenRefreshURL
+            self.configuration.playURI = ""
+        }
+        let manager = SPTSessionManager(configuration: self.configuration, delegate: self)
+        return manager
+    }()
+    
+    lazy var appRemote: SPTAppRemote = {
+        let appRemote = SPTAppRemote(configuration: configuration, logLevel: .debug)
+        appRemote.delegate = self
+        return appRemote
+    }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -76,7 +93,87 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("USER IS NOT LOGGED IN")
         }
         
+        let requestedScopes: SPTScope = [.appRemoteControl]
+        self.sessionManager.initiateSession(with: requestedScopes, options: .default)
+        
         return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        self.sessionManager.application(app, open: url, options: options)
+        
+        return true
+    }
+    
+    func sessionManager(manager: SPTSessionManager, didInitiate session: SPTSession) {
+        self.appRemote.connectionParameters.accessToken = session.accessToken
+        self.appRemote.connect()
+    }
+    
+    func sessionManager(manager: SPTSessionManager, didFailWith error: Error) {
+        print("fail", error)
+    }
+    
+    func sessionManager(manager: SPTSessionManager, didRenew session: SPTSession) {
+        print("renewed", session)
+    }
+    
+    
+    
+    func appRemoteDidEstablishConnection(_ appRemote: SPTAppRemote) {
+        // Connection was successful, you can begin issuing commands
+        self.appRemote.playerAPI?.delegate = self
+        self.appRemote.playerAPI?.subscribe(toPlayerState: { (result, error) in
+            if let error = error {
+                debugPrint(error.localizedDescription)
+            }
+        })
+        
+        // Want to play a new track?
+        // self.appRemote.playerAPI?.play("spotify:track:13WO20hoD72L0J13WTQWlT", callback: { (result, error) in
+        //     if let error = error {
+        //         print(error.localizedDescription)
+        //     }
+        // })
+        
+    }
+    
+    func appRemote(_ appRemote: SPTAppRemote, didDisconnectWithError error: Error?) {
+        print("disconnected")
+    }
+    
+    func appRemote(_ appRemote: SPTAppRemote, didFailConnectionAttemptWithError error: Error?) {
+        print("failed")
+    }
+    
+    func playerStateDidChange(_ playerState: SPTAppRemotePlayerState) {
+        debugPrint("Track name: %@", playerState.track.name)
+        
+//        print("player state changed")
+//        print("isPaused", playerState.isPaused)
+//        print("track.uri", playerState.track.uri)
+//        print("track.name", playerState.track.name)
+//        print("track.imageIdentifier", playerState.track.imageIdentifier)
+//        print("track.artist.name", playerState.track.artist.name)
+//        print("track.album.name", playerState.track.album.name)
+//        print("track.isSaved", playerState.track.isSaved)
+//        print("playbackSpeed", playerState.playbackSpeed)
+//        print("playbackOptions.isShuffling", playerState.playbackOptions.isShuffling)
+//        print("playbackOptions.repeatMode", playerState.playbackOptions.repeatMode.hashValue)
+//        print("playbackPosition", playerState.playbackPosition)
+        
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        if self.appRemote.isConnected {
+            self.appRemote.disconnect()
+        }
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        if let _ = self.appRemote.connectionParameters.accessToken {
+            self.appRemote.connect()
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -103,4 +200,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
-
