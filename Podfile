@@ -16,6 +16,5 @@ pod 'Firebase/Storage'
 pod 'PKHUD'
 pod 'SwipeCellKit'
 pod 'CRRefresh'
-pod 'OAuthSwift', '~> 1.2.0'
 
 end
