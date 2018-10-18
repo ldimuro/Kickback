@@ -133,13 +133,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
                     print("Success! Got the data")
                     let dataJSON : JSON = JSON(response.result.value!)
                     
+                    self.getPlaylists(json: dataJSON)
                     
-                } else {
+                }
+                else {
                     print("Error: \(String(describing: response.result.error!))")
                 }
         }
         
     }
+    
+    
     
     func sessionManager(manager: SPTSessionManager, didFailWith error: Error) {
         print("fail", error)
@@ -147,6 +151,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
     
     func sessionManager(manager: SPTSessionManager, didRenew session: SPTSession) {
         print("renewed", session)
+    }
+    
+    func getPlaylists(json : JSON) {
+        
+        var x = 0
+        
+        while (json["items"][x]["name"].string != nil) {
+            
+            let playlist = json["items"][x]["name"].string!
+            
+            print(playlist)
+            
+            x += 1
+            
+        }
+        
     }
     
     

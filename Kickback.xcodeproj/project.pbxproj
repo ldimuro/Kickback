@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		74ACEB922997F44389C7D929 /* Pods_Kickback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 186D215F1CCBE421EBD65B60 /* Pods_Kickback.framework */; };
+		8403951521784EFC00DB41A6 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8403951421784EFC00DB41A6 /* Playlist.swift */; };
 		842D14D7212628C40047D4FF /* QueueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842D14D5212628C40047D4FF /* QueueTableViewCell.swift */; };
 		842D14D8212628C40047D4FF /* QueueTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842D14D6212628C40047D4FF /* QueueTableViewCell.xib */; };
 		844C9DDC20FC576D0029269D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844C9DDB20FC576D0029269D /* AppDelegate.swift */; };
@@ -46,6 +47,7 @@
 /* Begin PBXFileReference section */
 		186D215F1CCBE421EBD65B60 /* Pods_Kickback.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kickback.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		19033200E184BD247ABCD82E /* Pods-Kickback.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kickback.release.xcconfig"; path = "Pods/Target Support Files/Pods-Kickback/Pods-Kickback.release.xcconfig"; sourceTree = "<group>"; };
+		8403951421784EFC00DB41A6 /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		842D14D5212628C40047D4FF /* QueueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueTableViewCell.swift; sourceTree = "<group>"; };
 		842D14D6212628C40047D4FF /* QueueTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QueueTableViewCell.xib; sourceTree = "<group>"; };
 		844C9DD820FC576D0029269D /* Kickback.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kickback.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -175,6 +177,7 @@
 				84C0A1A3211BCD1800389E6A /* Notification.swift */,
 				84BF6454210AB9DB007360A1 /* SearchUser.swift */,
 				847935462118DCBE00C47ED1 /* AddFriend.swift */,
+				8403951421784EFC00DB41A6 /* Playlist.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -369,6 +372,7 @@
 				8478A77C2106D4A800FB099B /* ProfilePageViewController.swift in Sources */,
 				84C0A1A4211BCD1800389E6A /* Notification.swift in Sources */,
 				84EA633020FDD60C00F84701 /* Station.swift in Sources */,
+				8403951521784EFC00DB41A6 /* Playlist.swift in Sources */,
 				847935472118DCBE00C47ED1 /* AddFriend.swift in Sources */,
 				84A13A0D21085C5300146E98 /* FlaticonCredits.swift in Sources */,
 				8478A7802106FB4F00FB099B /* SearchViewController.swift in Sources */,
