@@ -8,4 +8,3 @@
 
 #import <SpotifyiOS/SpotifyiOS.h>
 
-#endif /* Kickback_Bridging_Header_h */
