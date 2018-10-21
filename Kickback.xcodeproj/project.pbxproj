@@ -37,6 +37,9 @@
 		84BF6455210AB9DB007360A1 /* SearchUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BF6454210AB9DB007360A1 /* SearchUser.swift */; };
 		84C0A1A2211BC83800389E6A /* UIBarButtonItem+Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0A1A1211BC83800389E6A /* UIBarButtonItem+Badge.swift */; };
 		84C0A1A4211BCD1800389E6A /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C0A1A3211BCD1800389E6A /* Notification.swift */; };
+		84C21E3F217D276F00D301F9 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C21E3E217D276F00D301F9 /* PlaylistViewController.swift */; };
+		84C21E41217D28F600D301F9 /* PlaylistNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C21E40217D28F600D301F9 /* PlaylistNavigationViewController.swift */; };
+		84C21E43217D41A700D301F9 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C21E42217D41A700D301F9 /* Song.swift */; };
 		84EA632D20FDCC6100F84701 /* StationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA632B20FDCC6100F84701 /* StationTableViewCell.swift */; };
 		84EA632E20FDCC6100F84701 /* StationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EA632C20FDCC6100F84701 /* StationTableViewCell.xib */; };
 		84EA633020FDD60C00F84701 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA632F20FDD60C00F84701 /* Station.swift */; };
@@ -78,6 +81,9 @@
 		84BF6454210AB9DB007360A1 /* SearchUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUser.swift; sourceTree = "<group>"; };
 		84C0A1A1211BC83800389E6A /* UIBarButtonItem+Badge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Badge.swift"; sourceTree = "<group>"; };
 		84C0A1A3211BCD1800389E6A /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		84C21E3E217D276F00D301F9 /* PlaylistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
+		84C21E40217D28F600D301F9 /* PlaylistNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistNavigationViewController.swift; sourceTree = "<group>"; };
+		84C21E42217D41A700D301F9 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		84EA632B20FDCC6100F84701 /* StationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationTableViewCell.swift; sourceTree = "<group>"; };
 		84EA632C20FDCC6100F84701 /* StationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StationTableViewCell.xib; sourceTree = "<group>"; };
 		84EA632F20FDD60C00F84701 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
@@ -148,6 +154,7 @@
 				8455AB1821004DF7009BCBDB /* AddStationViewController.swift */,
 				847935442118D5CE00C47ED1 /* AddFriendsViewController.swift */,
 				84690FB92111111400F3FA53 /* NotificationsViewController.swift */,
+				84C21E3E217D276F00D301F9 /* PlaylistViewController.swift */,
 				8455AB1D2100557F009BCBDB /* Classes */,
 			);
 			path = Controller;
@@ -178,6 +185,7 @@
 				84BF6454210AB9DB007360A1 /* SearchUser.swift */,
 				847935462118DCBE00C47ED1 /* AddFriend.swift */,
 				8403951421784EFC00DB41A6 /* Playlist.swift */,
+				84C21E42217D41A700D301F9 /* Song.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -204,6 +212,7 @@
 			children = (
 				849FBFF62101AA4000387044 /* HomePageNavigationViewController.swift */,
 				849FBFF82101AA9900387044 /* AddStationNavigationViewController.swift */,
+				84C21E40217D28F600D301F9 /* PlaylistNavigationViewController.swift */,
 			);
 			path = "Navigation Controllers";
 			sourceTree = "<group>";
@@ -370,11 +379,13 @@
 				8455AB1921004DF7009BCBDB /* AddStationViewController.swift in Sources */,
 				847935452118D5CE00C47ED1 /* AddFriendsViewController.swift in Sources */,
 				8478A77C2106D4A800FB099B /* ProfilePageViewController.swift in Sources */,
+				84C21E43217D41A700D301F9 /* Song.swift in Sources */,
 				84C0A1A4211BCD1800389E6A /* Notification.swift in Sources */,
 				84EA633020FDD60C00F84701 /* Station.swift in Sources */,
 				8403951521784EFC00DB41A6 /* Playlist.swift in Sources */,
 				847935472118DCBE00C47ED1 /* AddFriend.swift in Sources */,
 				84A13A0D21085C5300146E98 /* FlaticonCredits.swift in Sources */,
+				84C21E41217D28F600D301F9 /* PlaylistNavigationViewController.swift in Sources */,
 				8478A7802106FB4F00FB099B /* SearchViewController.swift in Sources */,
 				844C9DDC20FC576D0029269D /* AppDelegate.swift in Sources */,
 				84A13A0A2108509400146E98 /* SearchTableViewCell.swift in Sources */,
@@ -382,6 +393,7 @@
 				8455AB1721004956009BCBDB /* TabBarViewController.swift in Sources */,
 				84B4A7E7211B9B6600CAC2E3 /* NotificationTableViewCell.swift in Sources */,
 				849FBFF72101AA4000387044 /* HomePageNavigationViewController.swift in Sources */,
+				84C21E3F217D276F00D301F9 /* PlaylistViewController.swift in Sources */,
 				84C0A1A2211BC83800389E6A /* UIBarButtonItem+Badge.swift in Sources */,
 				844C9DF020FC613E0029269D /* HomePageViewController.swift in Sources */,
 				84690FBA2111111400F3FA53 /* NotificationsViewController.swift in Sources */,

@@ -9,7 +9,8 @@
 import Foundation
 
 class Playlist {
-    var playlistName : String = ""
+    var name : String = ""
     var owner : String = ""
     var songs  = [String]()
+    var href : String = ""
 }
