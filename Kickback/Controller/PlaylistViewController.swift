@@ -52,12 +52,30 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
             .responseJSON { response in
                 if response.result.isSuccess {
                     
-                    print("Success! Got the data")
+                    print("Success! Got the songs")
                     let dataJSON : JSON = JSON(response.result.value!)
                     
-                    print(dataJSON["items"][0]["track"]["name"].string!)
+                    //Parse songs
+                    var y = 0
                     
-//                    self.getPlaylistSongs(json: dataJSON)
+                    while (dataJSON["items"][y] != JSON.null) {
+                        
+                        let name = dataJSON["items"][y]["track"]["name"].string!
+                        let artist = dataJSON["items"][y]["track"]["artists"][0]["name"].string!
+                        let id = dataJSON["items"][y]["track"]["id"].string!
+                        
+                        let song = Song()
+                        
+                        song.name = name
+                        song.artist = artist
+                        song.id = id
+                        
+                        print("\(y + 1).\t \"\(name)\" - \(artist)")
+                        
+                        y += 1
+                    }
+                    
+                    print("Got all songs")
                     
                 }
                 else {
@@ -66,25 +84,6 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         playlistTableview.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func getPlaylistSongs(json: JSON) {
-        
-        var x = 0
-        
-        while (json["items"][x]["name"].string != nil) {
-            
-            let song = Song()
-            
-            let name = json["items"][x]["track"]["name"].string!
-            let artist = json["items"][x]["track"]["artists"][0]["name"].string!
-            let id = json["items"][x]["track"]["id"].string!
-            
-            print("\(x). \(name) - \(artist)")
-            
-            x += 1
-            
-        }
         
     }
     
