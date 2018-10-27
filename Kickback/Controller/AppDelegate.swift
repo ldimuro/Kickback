@@ -121,6 +121,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
     func sessionManager(manager: SPTSessionManager, didInitiate session: SPTSession) {
         self.appRemote.connectionParameters.accessToken = session.accessToken
         self.appRemote.connect()
+        
+        UserDataArray.accessToken = session.accessToken
+        
         print("MUSIC STARTED")
         
         //GET USER PLAYLISTS
@@ -133,13 +136,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
                     print("Success! Got the data")
                     let dataJSON : JSON = JSON(response.result.value!)
                     
+                    self.getPlaylists(json: dataJSON)
                     
-                } else {
+                }
+                else {
                     print("Error: \(String(describing: response.result.error!))")
                 }
         }
         
+        
+        
     }
+    
+    
     
     func sessionManager(manager: SPTSessionManager, didFailWith error: Error) {
         print("fail", error)
@@ -147,6 +156,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
     
     func sessionManager(manager: SPTSessionManager, didRenew session: SPTSession) {
         print("renewed", session)
+    }
+    
+    func getPlaylists(json: JSON) {
+        
+        var x = 0
+        
+        while (json["items"][x]["name"].string != nil) {
+            
+            let playlist = Playlist()
+            
+            let name = json["items"][x]["name"].string!
+            let owner = json["items"][x]["owner"]["id"].string!
+            let href = json["items"][x]["tracks"]["href"].string!
+            
+            playlist.name = name
+            playlist.owner = owner
+            playlist.href = href
+            
+            UserDataArray.playlists.append(playlist)
+            
+            x += 1
+            
+        }
+        
     }
     
     

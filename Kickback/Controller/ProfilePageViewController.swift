@@ -45,6 +45,13 @@ class ProfilePageViewController: UIViewController, UIImagePickerControllerDelega
     
     override func viewDidAppear(_ animated: Bool) {
         profilePicture.alpha = 1.0
+        
+        for x in UserDataArray.playlists {
+            print("**********************")
+            print("NAME: \(x.name)")
+            print("OWNER: \(x.owner)")
+            print("HREF: \(x.href)")
+        }
     }
     
     @IBAction func logoutButton(_ sender: Any) {

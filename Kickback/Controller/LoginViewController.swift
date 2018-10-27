@@ -121,6 +121,8 @@ class ViewController: UIViewController {
 struct UserDataArray {
     static var profilePicture : UIImage?
     static var friends = [String]()
+    static var playlists = [Playlist]()
+    static var accessToken : String?
 //    static var stations = [Station]()
 }
 
