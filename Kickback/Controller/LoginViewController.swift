@@ -46,7 +46,7 @@ class ViewController: UIViewController {
                 self.getUser { (success) -> Void in
                     
                     if success {
-                        print("GOT USER INFO FOR: \(UserDefaults.standard.string(forKey: "username")!)")
+//                        print("GOT USER INFO FOR: \(UserDefaults.standard.string(forKey: "username")!)")
                         
                         //DELAYS FOR A SECOND TO GIVE TIME TO COMMUNICATE INFORMATION WITH SERVER
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // in a second...

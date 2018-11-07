@@ -95,7 +95,11 @@ class AddStationViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 1 {
+        
+        if indexPath.row == 0 {
+            self.performSegue(withIdentifier: "goToAddPlaylists", sender: self)
+        }
+        else if indexPath.row == 1 {
             self.performSegue(withIdentifier: "goToAddFriends", sender: self)
         }
         
