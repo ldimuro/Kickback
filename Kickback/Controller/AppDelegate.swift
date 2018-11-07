@@ -143,9 +143,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTSessionManagerDelegate
                     print("Error: \(String(describing: response.result.error!))")
                 }
         }
-        
-        
-        
     }
     
     

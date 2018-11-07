@@ -7,9 +7,21 @@
 //
 
 import Foundation
+import ObjectMapper
 
-class Song {
-    var name : String = ""
-    var artist : String = ""
-    var id : String = ""
+class Song: Mappable {
+
+    var name : String?
+    var artist : String?
+    var id : String?
+
+    required init?(map: Map) {
+
+    }
+
+    func mapping(map: Map) {
+        name <- map["track.name"]
+        artist <- map["track.artists.0.name"]
+        id <- map["track.id"]
+    }
 }

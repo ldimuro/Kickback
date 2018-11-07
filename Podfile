@@ -16,5 +16,6 @@ pod 'Firebase/Storage'
 pod 'PKHUD'
 pod 'SwipeCellKit'
 pod 'CRRefresh'
+pod 'AlamofireObjectMapper', '~> 5.0'
 
 end

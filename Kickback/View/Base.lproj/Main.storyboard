@@ -654,11 +654,47 @@
                         <outlet property="stationNameTextfield" destination="M8o-Yn-QYS" id="DzL-7s-SPg"/>
                         <outlet property="tableView" destination="8Bq-7w-Ey1" id="jTF-yc-8GY"/>
                         <segue destination="o9A-wf-gVl" kind="show" identifier="goToAddFriends" id="4TJ-os-lSy"/>
+                        <segue destination="fRQ-hR-5Z3" kind="show" identifier="goToAddPlaylists" id="Jhz-9h-HVQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B8w-6i-51K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3598" y="37"/>
+        </scene>
+        <!--Add Playlist View Controller-->
+        <scene sceneID="Mf7-1P-1dd">
+            <objects>
+                <viewController id="fRQ-hR-5Z3" customClass="AddPlaylistViewController" customModule="Kickback" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bWL-r8-OUc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mQ4-Ym-CNW">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="vUX-qM-DAZ">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vUX-qM-DAZ" id="yI4-Hp-Wd7">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="PPL-zY-sk2"/>
+                    </view>
+                    <connections>
+                        <outlet property="playlistTable" destination="mQ4-Ym-CNW" id="jE8-Il-3sx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="huc-cH-iN2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4572" y="324.38423645320199"/>
         </scene>
         <!--Add Friends View Controller-->
         <scene sceneID="z2t-wi-rzJ">
@@ -688,7 +724,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="esp-SB-gNf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4572" y="36.945812807881772"/>
+            <point key="canvasLocation" x="4572" y="-324"/>
         </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="f6y-Z7-BKZ">
@@ -769,7 +805,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4uD-wn-HPt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3548" y="1041.8719211822661"/>
+            <point key="canvasLocation" x="3598" y="1042"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="WD7-xg-gtx">
@@ -784,7 +820,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wfi-wm-eh1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4498" y="1042"/>
+            <point key="canvasLocation" x="4572" y="1042"/>
         </scene>
         <!--Add Station Navigation-->
         <scene sceneID="DaO-zL-TrK">
